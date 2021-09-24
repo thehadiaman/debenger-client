@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Button, Menu, Segment} from "semantic-ui-react";
-import {NavMenu} from "./navMenu";
+import NavMenu from "./common/navMenu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
 

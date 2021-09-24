@@ -1,13 +1,13 @@
 import React, {Component} from "react";
 
-class Login extends Component {
+class SignupForm extends Component {
     render() {
         return (
             <React.Fragment>
-                <h1>LOGIN</h1>
+                <h1>SIGNUP</h1>
             </React.Fragment>
         );
     }
 }
 
-export default Login;
+export default SignupForm;
