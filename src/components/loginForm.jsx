@@ -1,9 +1,9 @@
-import React, {Component} from "react";
+import React from "react";
 import {Form, Grid} from "semantic-ui-react";
 import TheForm from "./common/theForm";
 import {Link} from "react-router-dom";
 
-class LoginForm extends Component {
+class LoginForm extends TheForm {
 
     state={
         inputs: [{
@@ -19,21 +19,7 @@ class LoginForm extends Component {
             placeholder: "Password",
             label: "Password"
         }],
-        error: {
-            email: "",
-            password: ""
-        }
-    }
-
-    handleChange = (input) => {
-        const inputs = [...this.state.inputs];
-
-        const newInput = inputs.find(i=>i.name===input.target.name);
-        newInput.value = input.target.value;
-        const index = inputs.indexOf(newInput);
-        inputs[index] = newInput;
-
-        this.setState(inputs);
+        error: {}
     }
 
     handleSubmit = () => {
@@ -41,25 +27,27 @@ class LoginForm extends Component {
     }
 
     render() {
-        const {inputs} = this.state;
-        const {handleChange, handleSubmit} = this;
-
-        const forgetPassword = <Form.Field as={Link} to={'/'}>
-            Forget Password ?
-        </Form.Field>
+        const forgetPassword = <div>
+            <Grid columns={2}>
+                <Grid.Column>
+                    <Form.Field as={Link} to={'/'}>
+                        Forget Password ?
+                    </Form.Field>
+                </Grid.Column>
+                <Grid.Column>
+                    <Form.Field as={Link} to={'/signup'}>
+                        Signup for account.
+                    </Form.Field>
+                </Grid.Column>
+            </Grid>
+        </div>
 
         return (
             <React.Fragment>
                 <Grid container columns={3}>
                     <Grid.Column/>
                     <Grid.Column>
-                        <TheForm
-                            heading={'Login'}
-                            inputs={inputs}
-                            handleChange={handleChange}
-                            handleSubmit={handleSubmit}
-                            extra={forgetPassword}
-                        />
+                        {this.renderForm('Login', forgetPassword)}
                     </Grid.Column>
                     <Grid.Column/>
                 </Grid>
