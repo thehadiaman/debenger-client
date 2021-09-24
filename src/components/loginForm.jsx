@@ -49,7 +49,6 @@ class LoginForm extends TheForm {
                     <Grid.Column>
                         {this.renderForm('Login', forgetPassword, 'Login')}
                     </Grid.Column>
-                    <Grid.Column/>
                 </Grid>
             </React.Fragment>
         );

@@ -28,7 +28,6 @@ class ForgetPassword extends TheForm {
                     <Grid.Column>
                         {this.renderForm('Forget Password', forgetPassword, 'Submit')}
                     </Grid.Column>
-                    <Grid.Column/>
                 </Grid>
             </React.Fragment>
         );

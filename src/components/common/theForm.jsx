@@ -24,7 +24,7 @@ class TheForm extends Component {
     renderForm(heading, extra, btn){
         const {inputs} = this.state;
         const {handleChange, handleSubmit} = this;
-
+        const {inverted} = this.props;
         return (
             <div>
                 <h1>{heading}</h1>
@@ -35,6 +35,7 @@ class TheForm extends Component {
                                 key={input.name}
                                 input={input}
                                 handleChange={handleChange}
+                                inverted={inverted}
                             />
                         );
                     })}

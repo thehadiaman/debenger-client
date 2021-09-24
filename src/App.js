@@ -1,3 +1,4 @@
+import React, {Component} from "react";
 import './App.css';
 import Navbar from "./components/navbar";
 import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
@@ -7,25 +8,46 @@ import LoginForm from "./components/loginForm";
 import SignupForm from "./components/signupForm";
 import NotFound from "./components/not-found";
 import ForgetPassword from "./components/forgetPassword";
+import {faMoon, faSun} from "@fortawesome/free-solid-svg-icons";
 
-function App() {
-    return (
-        <BrowserRouter>
-            <Navbar/>
-            <Container>
-                <Grid stackable columns={1}>
-                    <Switch>
-                        <Route path={'/signup'} component={SignupForm} />
-                        <Route path={'/login'} component={LoginForm} />
-                        <Route path={'/forgetpassword'} component={ForgetPassword} />
-                        <Route path={'/404'} component={NotFound}/>
-                        <Redirect exact from={'/'} to={'/login'}/>
-                        <Redirect to={'/404'} />
-                    </Switch>
-                </Grid>
-            </Container>
-        </BrowserRouter>
-    );
+class App extends Component {
+    state={
+        inverted: true,
+        invIcon: faSun,
+    }
+
+    inverter = () => {
+        const {inverted} = this.state;
+        document.body.style.backgroundColor = inverted ? '#393B3B': 'white';
+
+        const invIcon = inverted? faMoon : faSun;
+        this.setState({inverted: !inverted, invIcon});
+    }
+
+    render() {
+        const {inverted, invIcon} = this.state;
+        document.body.style.backgroundColor = inverted ? '#393B3B': 'white';
+        return (
+            <div style={{color: inverted ? 'white': '#393B3B'
+            }}>
+                <BrowserRouter>
+                    <Navbar inverted={inverted} inverter={this.inverter} invIcon={invIcon}/>
+                    <Container>
+                        <Grid stackable columns={1}>
+                            <Switch>
+                                <Route path={'/signup'} render={()=><SignupForm inverted={inverted}/>} />
+                                <Route path={'/login'} render={()=><LoginForm  inverted={inverted}/>} />
+                                <Route path={'/forgetpassword'} render={()=><ForgetPassword  inverted={inverted}/>} />
+                                <Route path={'/404'} render={()=><NotFound  inverted={inverted}/>}/>
+                                <Redirect exact from={'/'} to={'/login'}/>
+                                <Redirect to={'/404'} />
+                            </Switch>
+                        </Grid>
+                    </Container>
+                </BrowserRouter>
+            </div>
+        );
+    }
 }
 
 export default App;

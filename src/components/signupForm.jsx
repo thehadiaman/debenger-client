@@ -44,7 +44,6 @@ class SignupForm extends TheForm {
                     <Grid.Column>
                         {this.renderForm('Signup', toLogin, 'Signup')}
                     </Grid.Column>
-                    <Grid.Column/>
                 </Grid>
             </React.Fragment>
         );
