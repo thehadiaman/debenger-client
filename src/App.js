@@ -6,6 +6,7 @@ import {Container, Grid} from "semantic-ui-react";
 import LoginForm from "./components/loginForm";
 import SignupForm from "./components/signupForm";
 import NotFound from "./components/not-found";
+import ForgetPassword from "./components/forgetPassword";
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                     <Switch>
                         <Route path={'/signup'} component={SignupForm} />
                         <Route path={'/login'} component={LoginForm} />
+                        <Route path={'/forgetpassword'} component={ForgetPassword} />
                         <Route path={'/404'} component={NotFound}/>
                         <Redirect exact from={'/'} to={'/login'}/>
                         <Redirect to={'/404'} />

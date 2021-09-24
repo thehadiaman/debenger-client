@@ -21,7 +21,7 @@ class TheForm extends Component {
     }
 
 
-    renderForm(heading, extra){
+    renderForm(heading, extra, btn){
         const {inputs} = this.state;
         const {handleChange, handleSubmit} = this;
 
@@ -40,7 +40,7 @@ class TheForm extends Component {
                     })}
                     {extra}
                     <br/>
-                    <Button primary floated={'right'} type='submit'>{heading}</Button>
+                    <Button primary floated={'right'} type='submit'>{btn}</Button>
                 </Form>
             </div>
         );

@@ -30,13 +30,13 @@ class LoginForm extends TheForm {
         const forgetPassword = <div>
             <Grid columns={2}>
                 <Grid.Column>
-                    <Form.Field as={Link} to={'/'}>
+                    <Form.Field as={Link} to={'/forgetpassword'}>
                         Forget Password ?
                     </Form.Field>
                 </Grid.Column>
                 <Grid.Column>
                     <Form.Field as={Link} to={'/signup'}>
-                        Signup for account.
+                        Signup for new account.
                     </Form.Field>
                 </Grid.Column>
             </Grid>
@@ -47,7 +47,7 @@ class LoginForm extends TheForm {
                 <Grid container columns={3}>
                     <Grid.Column/>
                     <Grid.Column>
-                        {this.renderForm('Login', forgetPassword)}
+                        {this.renderForm('Login', forgetPassword, 'Login')}
                     </Grid.Column>
                     <Grid.Column/>
                 </Grid>
