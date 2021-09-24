@@ -1,24 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import Navbar from "./components/common/navbar";
+import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
+import 'semantic-ui-css/semantic.min.css'
+import {Container, Grid} from "semantic-ui-react";
+import Login from "./components/login";
+import Signup from "./components/signup";
+import NotFound from "./components/not-found";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+        <Navbar/>
+      <Grid>
+          <Container>
+              <Grid.Column>
+                  <Switch>
+                      <Route path={'/signup'} component={Signup} />
+                      <Route path={'/login'} component={Login} />
+                      <Route path={'/404'} component={NotFound}/>
+                      <Redirect exact from={'/'} to={'/login'}/>
+                      <Redirect to={'/404'} />
+                  </Switch>
+              </Grid.Column>
+          </Container>
+      </Grid>
+    </BrowserRouter>
   );
 }
 
