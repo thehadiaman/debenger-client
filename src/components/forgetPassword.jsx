@@ -23,7 +23,7 @@ class ForgetPassword extends TheForm {
 
     getData = () => {
         return {
-            email: this.state.inputs.filter(input=>input.name==='email')
+            email: this.state.inputs.filter(input=>input.name==='email')[0].value
         }
     };
 

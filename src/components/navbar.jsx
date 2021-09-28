@@ -20,8 +20,11 @@ class Navbar extends Component {
                             <h3>Debenger</h3>
                         </Menu.Item>
                         {menu.map(menu=><NavMenu key={menu.name} name={menu.name} to={menu.to}/>)}
-                        <Button circular className={'inverter icon'} floated={'right'} onClick={inverter}>
-                            <FontAwesomeIcon icon={invIcon}/>
+                        <Button style={{backgroundColor: inverted ? 'white': '#393B3B'}}
+                                circular className={'inverter icon'}
+                                floated={'right'}
+                                onClick={inverter}>
+                            <FontAwesomeIcon style={{color: inverted ? '#393B3B': 'white'}} icon={invIcon}/>
                         </Button>
                     </Menu>
                 </Segment>

@@ -8,7 +8,7 @@ class TheForm extends Component {
     state={
         inputs: [],
         errors: {}
-    }
+    };
 
     handleChange = (input) => {
         const inputs = [...this.state.inputs];
@@ -35,7 +35,7 @@ class TheForm extends Component {
     handleSubmit = () => {
         const errors = this.validate();
         this.setState({errors: errors || {}})
-        console.log(errors);
+        this.doSubmit()
     }
 
     renderForm(heading, extra, btn){

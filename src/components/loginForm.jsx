@@ -28,9 +28,10 @@ class LoginForm extends TheForm {
     };
 
     getData = () => {
+        const {inputs} = this.state;
         return {
-            email: this.state.inputs.filter(input=>input.name==='email'),
-            password: this.state.inputs.filter(input=>input.name==='password')
+            email: inputs.filter(input=>input.name==='email')[0].value,
+            password: inputs.filter(input=>input.name==='password')[0].value
         }
     };
 
