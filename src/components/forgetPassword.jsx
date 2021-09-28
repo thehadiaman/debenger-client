@@ -2,6 +2,7 @@ import React from "react";
 import TheForm from "./common/theForm";
 import {Form, Grid} from "semantic-ui-react";
 import {Link} from "react-router-dom";
+import Joi from "joi-browser";
 
 class ForgetPassword extends TheForm {
 
@@ -13,7 +14,21 @@ class ForgetPassword extends TheForm {
             placeholder: "Email",
             label: "Email"
         }],
-        error: {}
+        errors: {}
+    }
+
+    schema = {
+        email: Joi.string().required().email().label('Email')
+    };
+
+    getData = () => {
+        return {
+            email: this.state.inputs.filter(input=>input.name==='email')
+        }
+    };
+
+    doSubmit = () => {
+        console.log('Submitting');
     }
 
     render() {

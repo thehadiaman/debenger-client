@@ -1,13 +1,13 @@
 import {Component} from "react";
-import {Button, Form} from "semantic-ui-react";
+import {Button, Form, Grid} from "semantic-ui-react";
 import Input from "./input";
-
+import Joi from "joi-browser";
 
 class TheForm extends Component {
 
     state={
         inputs: [],
-        error: {}
+        errors: {}
     }
 
     handleChange = (input) => {
@@ -20,6 +20,23 @@ class TheForm extends Component {
         this.setState(inputs);
     }
 
+    validate = () => {
+        const {error} = Joi.validate(this.getData(), this.schema, {abortEarly: false});
+        if(!error) return null;
+
+        const errors = {};
+        for(let item of error.details) {
+            errors[item.path[0]] = item.message;
+        }
+
+        return errors;
+    }
+
+    handleSubmit = () => {
+        const errors = this.validate();
+        this.setState({errors: errors || {}})
+        console.log(errors);
+    }
 
     renderForm(heading, extra, btn){
         const {inputs} = this.state;
@@ -36,12 +53,19 @@ class TheForm extends Component {
                                 input={input}
                                 handleChange={handleChange}
                                 inverted={inverted}
+                                error={this.state.errors[input.name]}
                             />
                         );
                     })}
-                    {extra}
-                    <br/>
-                    <Button primary floated={'right'} type='submit'>{btn}</Button>
+
+                    <Grid columns={2}>
+                        <Grid.Column>
+                            {extra}
+                        </Grid.Column>
+                        <Grid.Column>
+                            <Button primary floated={'right'} type='submit'>{btn}</Button>
+                        </Grid.Column>
+                    </Grid>
                 </Form>
             </div>
         );

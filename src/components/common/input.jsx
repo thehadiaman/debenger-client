@@ -1,21 +1,22 @@
 import * as React from "react";
-import {Form} from "semantic-ui-react";
+import {Form, Input as inp} from "semantic-ui-react";
 
-const Input = ({input, handleChange, inverted}) => {
+const Input = ({input, handleChange, inverted, error}) => {
     return (
-        <div>
-            <Form.Field>
-                <label style={{color: inverted ? 'white': '#393B3B'}}>{input.label}</label>
-                <input
-                    placeholder={input.placeholder}
-                    name={input.name}
-                    value={input.value}
-                    type={input.type}
-                    onChange={handleChange}
-                />
-                <br/>
-                <br/>
-            </Form.Field>
+        <div style={{marginBottom: '15px', color: 'red'}}>
+            <label style={{color: inverted ? 'white': '#393B3B', fontWeight: '1000'}}>{input.label}</label>
+            <Form.Field
+                control={inp}
+                placeholder={input.placeholder}
+                name={input.name}
+                value={input.value}
+                type={input.type}
+                onChange={handleChange}
+                error={error && {
+                    content: error,
+                    pointing: 'below',
+                }}
+            />
         </div>
     );
 };

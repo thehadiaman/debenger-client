@@ -2,12 +2,13 @@ import React from "react";
 import {Form, Grid} from "semantic-ui-react";
 import TheForm from "./common/theForm";
 import {Link} from "react-router-dom";
+import Joi from "joi-browser";
 
 class SignupForm extends TheForm {
 
     state={
         inputs: [{
-            name: "Name",
+            name: "name",
             value: "",
             type: "text",
             placeholder: "Name",
@@ -25,10 +26,25 @@ class SignupForm extends TheForm {
             placeholder: "Password",
             label: "Password"
         }],
-        error: {}
+        errors: {}
     }
 
-    handleSubmit = () => {
+    schema = {
+        name: Joi.string().required().label('Name').min(3).max(50),
+        email: Joi.string().required().email().label('Email'),
+        password: Joi.string().required().min(6).max(50).label('Password')
+    };
+
+    getData = () => {
+        const {inputs} = this.state;
+        return {
+            name: inputs.filter(input=>input.name==='name')[0].value,
+            email: inputs.filter(input=>input.name==='email')[0].value,
+            password: inputs.filter(input=>input.name==='password')[0].value
+        }
+    };
+
+    doSubmit = () => {
         console.log('Submitting');
     }
 

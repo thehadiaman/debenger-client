@@ -2,7 +2,7 @@ import React from "react";
 import {Form, Grid} from "semantic-ui-react";
 import TheForm from "./common/theForm";
 import {Link} from "react-router-dom";
-
+import Joi from "joi-browser";
 class LoginForm extends TheForm {
 
     state={
@@ -19,25 +19,39 @@ class LoginForm extends TheForm {
             placeholder: "Password",
             label: "Password"
         }],
-        error: {}
+        errors: {}
     }
 
-    handleSubmit = () => {
+    schema = {
+        email: Joi.string().required().email().label('Email'),
+        password: Joi.string().required().min(6).max(50).label('Password')
+    };
+
+    getData = () => {
+        return {
+            email: this.state.inputs.filter(input=>input.name==='email'),
+            password: this.state.inputs.filter(input=>input.name==='password')
+        }
+    };
+
+    doSubmit = () => {
         console.log('Submitting');
     }
 
     render() {
         const forgetPassword = <div>
-            <Grid columns={2}>
+            <Grid>
                 <Grid.Column>
-                    <Form.Field as={Link} to={'/forgetpassword'}>
-                        Forget Password ?
-                    </Form.Field>
-                </Grid.Column>
-                <Grid.Column>
-                    <Form.Field as={Link} to={'/signup'}>
-                        Signup for new account.
-                    </Form.Field>
+                    <Grid.Row>
+                        <Form.Field as={Link} to={'/forgetpassword'}>
+                            Forget Password ?
+                        </Form.Field>
+                    </Grid.Row>
+                    <Grid.Row>
+                        <Form.Field as={Link} to={'/signup'}>
+                            Signup for new account.
+                        </Form.Field>
+                    </Grid.Row>
                 </Grid.Column>
             </Grid>
         </div>
