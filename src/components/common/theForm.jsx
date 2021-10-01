@@ -35,6 +35,7 @@ class TheForm extends Component {
     handleSubmit = () => {
         const errors = this.validate();
         this.setState({errors: errors || {}})
+        if(errors) return;
         this.doSubmit()
     }
 

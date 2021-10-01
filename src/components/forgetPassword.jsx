@@ -28,7 +28,7 @@ class ForgetPassword extends TheForm {
     };
 
     doSubmit = () => {
-        console.log('Submitting');
+        console.log('Submitting forget password');
     }
 
     render() {

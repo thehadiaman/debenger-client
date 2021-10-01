@@ -1,4 +1,5 @@
 import React from "react";
+import {signup} from './services/userService.js'
 import {Form, Grid} from "semantic-ui-react";
 import TheForm from "./common/theForm";
 import {Link} from "react-router-dom";
@@ -44,8 +45,10 @@ class SignupForm extends TheForm {
         }
     };
 
-    doSubmit = () => {
-        console.log('Submitting');
+    doSubmit = async() => {
+        const user = await signup(this.getData())
+        localStorage.setItem('jwtToken', user.data);
+        window.location = '/verification'
     }
 
     render() {
