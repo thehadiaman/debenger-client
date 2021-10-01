@@ -5,6 +5,7 @@ import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
 import 'semantic-ui-css/semantic.min.css'
 import {Container, Grid} from "semantic-ui-react";
 import LoginForm from "./components/loginForm";
+import Verification from "./components/verification";
 import SignupForm from "./components/signupForm";
 import NotFound from "./components/not-found";
 import ForgetPassword from "./components/forgetPassword";
@@ -35,10 +36,11 @@ class App extends Component {
                     <Container>
                         <Grid stackable columns={1}>
                             <Switch>
-                                <Route path={'/signup'} render={()=><SignupForm inverted={inverted}/>} />
-                                <Route path={'/login'} render={()=><LoginForm  inverted={inverted}/>} />
-                                <Route path={'/forgetpassword'} render={()=><ForgetPassword  inverted={inverted}/>} />
-                                <Route path={'/404'} render={()=><NotFound  inverted={inverted}/>}/>
+                                <Route path={'/signup'} render={(props)=><SignupForm {...props} inverted={inverted}/>} />
+                                <Route path={'/verification'} render={(props)=><Verification {...props} inverted={inverted}/>} />
+                                <Route path={'/login'} render={(props)=><LoginForm {...props} inverted={inverted}/>} />
+                                <Route path={'/forgetpassword'} render={(props)=><ForgetPassword {...props} inverted={inverted}/>} />
+                                <Route path={'/404'} render={()=><NotFound inverted={inverted}/>}/>
                                 <Redirect exact from={'/'} to={'/login'}/>
                                 <Redirect to={'/404'} />
                             </Switch>

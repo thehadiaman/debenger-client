@@ -12,12 +12,13 @@ class TheForm extends Component {
 
     handleChange = (input) => {
         const inputs = [...this.state.inputs];
+        const errors = {...this.state.errors};
         const newInput = inputs.find(i=>i.name===input.target.name);
         newInput.value = input.target.value;
         const index = inputs.indexOf(newInput);
         inputs[index] = newInput;
-
-        this.setState(inputs);
+        delete errors[newInput.name];
+        this.setState({inputs, errors});
     }
 
     validate = () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import {signup} from './services/userService.js'
+import {verification} from './services/userService.js'
 import {Form, Grid} from "semantic-ui-react";
 import TheForm from "./common/theForm";
 import {Link} from "react-router-dom";
@@ -9,50 +9,33 @@ class SignupForm extends TheForm {
 
     state={
         inputs: [{
-            name: "name",
+            name: "verificationCode",
             value: "",
             type: "text",
-            placeholder: "Name",
-            label: "Name"
-        },{
-            name: "email",
-            value: "",
-            type: "email",
-            placeholder: "Email",
-            label: "Email"
-        }, {
-            name: "password",
-            value: "",
-            type: "password",
-            placeholder: "Password",
-            label: "Password"
+            placeholder: "Verification Code",
+            label: "Verification Code"
         }],
         errors: {}
     }
 
     schema = {
-        name: Joi.string().required().label('Name').min(3).max(50),
-        email: Joi.string().required().email().label('Email'),
-        password: Joi.string().required().min(6).max(50).label('Password')
+        verificationCode: Joi.string().required().label('Verification Code'),
     };
 
     getData = () => {
         const {inputs} = this.state;
         return {
-            name: inputs.filter(input=>input.name==='name')[0].value,
-            email: inputs.filter(input=>input.name==='email')[0].value,
-            password: inputs.filter(input=>input.name==='password')[0].value
+            verificationCode: inputs.filter(input=>input.name==='verificationCode')[0].value,
         }
     };
 
     doSubmit = async() => {
         try {
-            const user = await signup(this.getData());
-            localStorage.setItem('jwtToken', user.headers['x-auth-token']);
-            window.location = '/verification';
+            await verification(this.getData())
+            window.location = '/';
         }catch (ex) {
             const errors = {...this.state.errors};
-            errors.email = ex.response.data;
+            errors.verificationCode = ex.response.data;
             this.setState({errors});
         }
     }
