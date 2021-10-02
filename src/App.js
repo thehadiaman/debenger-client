@@ -18,16 +18,16 @@ import Account from "./components/account";
 
 class App extends Component {
     state={
-        inverted: true,
+        inverted: !!localStorage.getItem('inverted'),
         invIcon: faSun,
     };
-
 
     inverter = () => {
         const {inverted} = this.state;
         document.body.style.backgroundColor = inverted ? '#393B3B': 'white';
 
         const invIcon = inverted? faMoon : faSun;
+        localStorage.getItem('inverted') ? localStorage.removeItem('inverted') : localStorage.setItem('inverted', 'true');
         this.setState({inverted: !inverted, invIcon});
     }
 
@@ -36,8 +36,7 @@ class App extends Component {
         const user = authUser()
         document.body.style.backgroundColor = inverted ? '#393B3B': 'white';
         return (
-            <div style={{color: inverted ? 'white': '#393B3B'
-            }}>
+            <div style={{color: inverted ? 'white': '#393B3B'}}>
                 <BrowserRouter>
                     <Navbar inverted={inverted} inverter={this.inverter} invIcon={invIcon} user={user}/>
                     <Container>
@@ -52,7 +51,6 @@ class App extends Component {
                                 <Route exact path={'/account'} render={()=><Account inverted={inverted} user={user} />} />
                                 <Route exact path={'/logout'} render={()=><Logout />}/>
                                 <Route exact path={'/'} render={(props)=><Home {...props} user={user} inverted={inverted}/>} />
-
                                 <Redirect to={'/404'} />
                             </Switch>
                         </Grid>
