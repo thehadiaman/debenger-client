@@ -42,7 +42,7 @@ class Navbar extends Component {
         const {inverter, inverted, invIcon, user} = this.props;
         const {menu, currentLink} = this.state;
 
-        const dropDownLaunch = <Button inverted={inverted} className="dropdown-btn" style={{borderRadius: 0}}>{user.name}</Button>
+        const dropDownLaunch = user && <Button inverted={inverted} className="dropdown-btn" style={{borderRadius: 0}}>{user.name}</Button>;
 
         return (
             <div>
