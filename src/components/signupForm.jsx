@@ -2,7 +2,7 @@ import React from "react";
 import {signup} from '../services/userService'
 import {Form, Grid} from "semantic-ui-react";
 import TheForm from "./common/theForm";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import Joi from "joi-browser";
 
 class SignupForm extends TheForm {
@@ -58,6 +58,11 @@ class SignupForm extends TheForm {
     }
 
     render() {
+
+        const {user} = this.props;
+        if(user && !user.verified) return <Redirect to={"/verification"}/>
+        else if(user && user.verified) return <Redirect to={"/"}/>
+
         const toLogin = <Form.Field as={Link} to={'/'}>
             Already have an account ?.
         </Form.Field>

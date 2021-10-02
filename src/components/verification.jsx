@@ -2,8 +2,9 @@ import React from "react";
 import {verification} from '../services/userService'
 import {Form, Grid} from "semantic-ui-react";
 import TheForm from "./common/theForm";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import Joi from "joi-browser";
+import jwtDecode from "jwt-decode";
 
 class SignupForm extends TheForm {
 
@@ -31,17 +32,25 @@ class SignupForm extends TheForm {
 
     doSubmit = async() => {
         try {
-            const user = await verification(this.getData())
+            const user = await verification(this.getData());
+            console.log(user);
+            console.log(jwtDecode(user.headers['x-auth-token']));
             localStorage.setItem('jwtToken', user.headers['x-auth-token']);
             window.location = '/';
         }catch (ex) {
             const errors = {...this.state.errors};
-            errors.verificationCode = ex.response.data;
+            console.log(ex);
+            errors.verificationCode = ex.response ? ex.response.data : ex.message;
             this.setState({errors});
         }
     }
 
     render() {
+
+        const {user} = this.props;
+        if(!user) return <Redirect to={"/login"} />
+        else if(user && user.verified) return <Redirect to={"/"} />
+
         const toLogin = <Form.Field as={Link} to={'/'}>
             Already have an account ?.
         </Form.Field>

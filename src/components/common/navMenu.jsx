@@ -1,12 +1,15 @@
 import * as React from "react";
 import {Menu} from "semantic-ui-react";
-import {NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
 
-function NavMenu({name, to}) {
+function NavMenu(props) {
+    const {name, to, currentLink, handleActiveLink} = props;
     return (
         <div>
             <Menu.Item
-                as={NavLink}
+                active={to===currentLink}
+                as={Link}
+                onClick={()=>handleActiveLink(to)}
                 name={name}
                 to={to}
             />

@@ -2,21 +2,28 @@ import React, {Component} from "react";
 import {Button, Menu, Segment} from "semantic-ui-react";
 import NavMenu from "./common/navMenu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {authToken} from "../services/authService";
+import {authUser} from "../services/authService";
+import DropDown from './common/dropDown';
 
 class Navbar extends Component {
 
     state={
-        menu: []
+        menu: [],
+        navbarDropDownData: [
+            {name: 'Account', link: '/account'},
+            {name: 'Logout', link: '/logout'}
+        ],
+        currentLink: '/'
     }
 
     setupMenu = () => {
-        if(!authToken()){
+        if(!authUser()){
             const menu = [{name: 'login', to:'/login'}, {name: 'signup', to:'/signup'}];
-            this.setState({menu});
+            this.setState({menu, currentLink: '/login'});
         }
         else {
-            const menu = [{name: 'home', to:'/'}, {name: 'my debates', to:'/debates'}];
+
+            const menu = [{name: 'home', to:'/'}, {name: 'my debates', to:'/mydebates'}];
             this.setState({menu});
         }
     };
@@ -26,10 +33,14 @@ class Navbar extends Component {
         this.setupMenu()
     }
 
+    handleActiveLink = (link) => {
+        this.setState({currentLink: link})
+    }
+
 
     render() {
-        const {inverter, inverted, invIcon} = this.props;
-        const {menu} = this.state;
+        const {inverter, inverted, invIcon, user} = this.props;
+        const {menu, currentLink} = this.state;
         return (
             <div>
                 <Segment inverted={inverted} style={{borderRadius: 0, marginBottom: '20px'}}>
@@ -37,7 +48,12 @@ class Navbar extends Component {
                         <Menu.Item>
                             <h3>Debenger</h3>
                         </Menu.Item>
-                        {menu.map(menu=><NavMenu key={menu.name} name={menu.name} to={menu.to}/>)}
+                        {menu.map(menu=><NavMenu key={menu.name} name={menu.name} currentLink={currentLink} to={menu.to} handleActiveLink={this.handleActiveLink}/>)}
+                        {user && <DropDown
+                            user={user}
+                            inverted={inverted}
+                            data={this.state.navbarDropDownData}
+                        />}
                         <Button style={{backgroundColor: inverted ? 'white': '#393B3B'}}
                                 circular className={'inverter icon'}
                                 floated={'right'}

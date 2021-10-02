@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Redirect} from "react-router-dom";
 
-class Home extends Component {
+class MyDebates extends Component {
     render() {
 
         const {user} = this.props;
@@ -9,11 +9,11 @@ class Home extends Component {
         else if(!user) return <Redirect to={"/login"}/>
 
         return (
-            <React.Fragment>
-                <h1>HOME</h1>
-            </React.Fragment>
+            <div>
+                <h1>My Debates</h1>
+            </div>
         );
     }
 }
 
-export default Home;
+export default MyDebates;

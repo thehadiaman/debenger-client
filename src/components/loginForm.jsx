@@ -1,7 +1,7 @@
 import React from "react";
 import {Form, Grid} from "semantic-ui-react";
 import TheForm from "./common/theForm";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import Joi from "joi-browser";
 import {login} from "../services/authService";
 class LoginForm extends TheForm {
@@ -51,6 +51,11 @@ class LoginForm extends TheForm {
     }
 
     render() {
+
+        const {user} = this.props;
+        if(user && !user.verified) return <Redirect to={"/verification"}/>
+        else if(user && user.verified) return <Redirect to={"/"}/>
+
         const forgetPassword = <div>
             <Grid>
                 <Grid.Column>

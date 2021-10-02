@@ -10,24 +10,17 @@ import SignupForm from "./components/signupForm";
 import NotFound from "./components/not-found";
 import ForgetPassword from "./components/forgetPassword";
 import {faMoon, faSun} from "@fortawesome/free-solid-svg-icons";
-import jwtDecode from 'jwt-decode';
-import {authToken} from "./services/authService";
+import {authUser} from "./services/authService";
 import Home from "./components/home";
+import Logout from "./components/logout";
+import MyDebates from "./components/myDebates";
+import Account from "./components/account";
 
 class App extends Component {
     state={
         inverted: true,
         invIcon: faSun,
     };
-
-
-    componentDidMount() {
-        try{
-            const jwt = authToken();
-            const user = jwtDecode(jwt);
-            this.setState({user});
-        }catch (ex){}
-    }
 
 
     inverter = () => {
@@ -39,7 +32,8 @@ class App extends Component {
     }
 
     render() {
-        const {inverted, invIcon, user} = this.state;
+        const {inverted, invIcon} = this.state;
+        const user = authUser()
         document.body.style.backgroundColor = inverted ? '#393B3B': 'white';
         return (
             <div style={{color: inverted ? 'white': '#393B3B'
@@ -49,12 +43,16 @@ class App extends Component {
                     <Container>
                         <Grid stackable columns={1}>
                             <Switch>
-                                <Route path={'/signup'} render={(props)=><SignupForm {...props} inverted={inverted}/>} />
-                                <Route path={'/login'} render={(props)=><LoginForm {...props} inverted={inverted}/>} />
-                                <Route path={'/forgetpassword'} render={(props)=><ForgetPassword {...props} inverted={inverted}/>} />
-                                <Route path={'/verification'} render={(props)=><Verification {...props} inverted={inverted}/>} />
-                                <Route path={'/404'} render={()=><NotFound inverted={inverted}/>}/>
-                                <Route path={'/'} render={(props)=><Home {...props} inverted={inverted}/>} />
+                                <Route exact path={'/signup'} render={(props)=><SignupForm {...props} user={user} inverted={inverted}/>} />
+                                <Route exact path={'/login'} render={(props)=><LoginForm {...props} user={user} inverted={inverted}/>} />
+                                <Route exact path={'/forgetpassword'} render={(props)=><ForgetPassword {...props} user={user} inverted={inverted}/>} />
+                                <Route exact path={'/verification'} render={(props)=><Verification {...props} user={user} inverted={inverted}/>} />
+                                <Route exact path={'/404'} render={()=><NotFound inverted={inverted}/>}/>
+                                <Route exact path={'/mydebates'} render={()=><MyDebates inverted={inverted} user={user} />}/>
+                                <Route exact path={'/account'} render={()=><Account inverted={inverted} user={user} />} />
+                                <Route exact path={'/logout'} render={()=><Logout />}/>
+                                <Route exact path={'/'} render={(props)=><Home {...props} user={user} inverted={inverted}/>} />
+
                                 <Redirect to={'/404'} />
                             </Switch>
                         </Grid>

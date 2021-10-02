@@ -1,19 +1,18 @@
 import React, {Component} from "react";
 import {Redirect} from "react-router-dom";
 
-class Home extends Component {
+class Account extends Component {
     render() {
-
         const {user} = this.props;
         if(user && !user.verified) return <Redirect to={"/verification"}/>
         else if(!user) return <Redirect to={"/login"}/>
 
         return (
-            <React.Fragment>
-                <h1>HOME</h1>
-            </React.Fragment>
+            <div>
+                <h1>Account</h1>
+            </div>
         );
     }
 }
 
-export default Home;
+export default Account;
