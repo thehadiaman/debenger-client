@@ -2,12 +2,30 @@ import React, {Component} from "react";
 import {Button, Menu, Segment} from "semantic-ui-react";
 import NavMenu from "./common/navMenu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {authToken} from "../services/authService";
 
 class Navbar extends Component {
 
     state={
-        menu: [{name: 'login', to:'/login'}, {name: 'signup', to:'/signup'}]
+        menu: []
     }
+
+    setupMenu = () => {
+        if(!authToken()){
+            const menu = [{name: 'login', to:'/login'}, {name: 'signup', to:'/signup'}];
+            this.setState({menu});
+        }
+        else {
+            const menu = [{name: 'home', to:'/'}, {name: 'my debates', to:'/debates'}];
+            this.setState({menu});
+        }
+    };
+
+
+    componentDidMount() {
+        this.setupMenu()
+    }
+
 
     render() {
         const {inverter, inverted, invIcon} = this.props;

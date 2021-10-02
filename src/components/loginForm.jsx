@@ -3,6 +3,7 @@ import {Form, Grid} from "semantic-ui-react";
 import TheForm from "./common/theForm";
 import {Link} from "react-router-dom";
 import Joi from "joi-browser";
+import {login} from "../services/authService";
 class LoginForm extends TheForm {
 
     state={
@@ -35,8 +36,18 @@ class LoginForm extends TheForm {
         }
     };
 
-    doSubmit = () => {
-        console.log('Submitting Login');
+    doSubmit = async() => {
+        try{
+            const user = await login(this.getData());
+            localStorage.setItem('jwtToken', user.headers['x-auth-token']);
+            window.location = '/';
+        }catch (ex) {
+            if(ex.response && ex.response.status === 400){
+                const errors = this.state.errors;
+                errors.email = ex.response.data;
+                this.setState({errors});
+            }
+        }
     }
 
     render() {

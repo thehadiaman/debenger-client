@@ -14,9 +14,11 @@ axios.interceptors.response.use(null, error => {
 
 });
 
-export default {
+const defaults = {
     get: axios.get,
     post: axios.post,
     put: axios.put,
     delete: axios.delete
 }
+
+export default defaults;

@@ -1,5 +1,5 @@
 import React from "react";
-import {signup} from './services/userService.js'
+import {signup} from '../services/userService'
 import {Form, Grid} from "semantic-ui-react";
 import TheForm from "./common/theForm";
 import {Link} from "react-router-dom";

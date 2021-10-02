@@ -1,5 +1,5 @@
 import React from "react";
-import {verification} from './services/userService.js'
+import {verification} from '../services/userService'
 import {Form, Grid} from "semantic-ui-react";
 import TheForm from "./common/theForm";
 import {Link} from "react-router-dom";
@@ -31,7 +31,8 @@ class SignupForm extends TheForm {
 
     doSubmit = async() => {
         try {
-            await verification(this.getData())
+            const user = await verification(this.getData())
+            localStorage.setItem('jwtToken', user.headers['x-auth-token']);
             window.location = '/';
         }catch (ex) {
             const errors = {...this.state.errors};
@@ -50,7 +51,7 @@ class SignupForm extends TheForm {
                 <Grid container columns={3}>
                     <Grid.Column/>
                     <Grid.Column>
-                        {this.renderForm('Signup', toLogin, 'Signup')}
+                        {this.renderForm('Email Verification', toLogin, 'Submit')}
                     </Grid.Column>
                 </Grid>
             </React.Fragment>
