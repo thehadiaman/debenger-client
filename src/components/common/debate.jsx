@@ -1,8 +1,10 @@
 import React, {Component} from "react";
-import {Button, Card, Grid, Segment} from "semantic-ui-react";
+import {Button, Card, Grid} from "semantic-ui-react";
 import Like from "./like";
 import {followDebate, like, unfollowDebate} from "../../services/debateService";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+import DropDown from "./dropDown";
 
 class Debate extends Component {
 
@@ -10,18 +12,32 @@ class Debate extends Component {
         following: false,
         followingBtnText: "Follow",
         like: false,
-        likes: this.props.debate.like.likes
+        likes: this.props.debate.like.likes,
+        edit: false,
+        editMenu: [
+            {name: 'Edit', link: '/edit'},
+            {name: 'Delete', link: '/delete'}
+        ]
     };
 
 
     componentDidMount() {
-        const following = this.props.debate.followers.filter(follower=>follower._id === this.props.user._id);
+
+        const {debate, user} = this.props;
+
+        const following = debate.followers.filter(follower=>follower._id === user._id);
         if(following.length>0) this.setState({following: true, followingBtnText: "Unfollow"})
 
-        const like = this.props.debate.like.lovers.filter(lover=>lover._id === this.props.user._id);
+        const like = debate.like.lovers.filter(lover=>lover._id === user._id);
         if(like.length>0){
             this.setState({like: true})
         }
+
+        const host = debate.host._id === user._id
+        if(host){
+            this.setState({edit: true})
+        }
+
     }
 
 
@@ -57,21 +73,24 @@ class Debate extends Component {
     };
 
     render() {
-        const {likes} = this.state;
+        const {likes, like, followingBtnText,  edit} = this.state;
         const {handleLike, handleFollow} = this;
         const {title, description, tags, _id} = this.props.debate;
 
         const header = <div>
             <Grid container width={10}>
                 <Grid.Column width={5}>
-                    <h1 style={{color: "black"}}>{title}</h1>
+                    <p style={{color: "black", fontSize: '20px', fontWeight: "bold"}}>{title.toUpperCase()}</p>
                 </Grid.Column>
                 <Grid.Column width={10}>
-                    <Button onClick={()=>handleFollow(_id)} primary floated={'right'}>{this.state.followingBtnText}</Button>
+                    <Button onClick={()=>handleFollow(_id)} primary floated={'right'}>{followingBtnText}</Button>
                 </Grid.Column>
+                {
+
+                }
             </Grid>
         </div>
-
+        const dropDownLaunch = <FontAwesomeIcon icon={faEllipsisV} size={"2x"}/>;
         return (
             <Card style={{width: "100%"}}>
                 <Card.Content header={header} />
@@ -82,11 +101,18 @@ class Debate extends Component {
                 <Card.Content extra>
                     <Grid container width={5}>
                         <Grid.Column>
-                            <Like liked={this.state.like} handleLike={handleLike} id={_id}/>
+                            <Like liked={like} handleLike={handleLike} id={_id}/>
                         </Grid.Column>
                         <Grid.Column width={3}>
                             <div className={'likes-box'}>{likes > 0 ? `${likes} ${likes === 1 ? "like": "likes"}` : ""}</div>
                         </Grid.Column>
+                        {edit && <div className={"edit-btn"}>
+                            <DropDown
+                                data={this.state.editMenu}
+                                component={dropDownLaunch}
+                                className={"dropdown"}
+                            />
+                        </div>}
                     </Grid>
                 </Card.Content>
             </Card>

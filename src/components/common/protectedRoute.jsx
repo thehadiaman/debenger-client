@@ -8,7 +8,7 @@ class ProtectedRoute extends Component {
         const user = authUser();
         return (
             <Route
-                exact
+                exact={true}
                 path={path}
                 render={(props)=>{
                     if(user && !user.verified) return <Redirect to={"/verification"}/>

@@ -1,3 +1,7 @@
+body{
+    user-select: none;
+}
+
 .inverter {
     position: absolute;
     top: 8px;
@@ -19,7 +23,7 @@
     position: absolute;
     background-color: #f9f9f9;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     z-index: 1;
 }
 
@@ -44,5 +48,14 @@
     text-align: center;
     margin-top: 3px;
     width: 100px;
-    font-size: 30px;
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.edit-btn{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
 }

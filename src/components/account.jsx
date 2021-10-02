@@ -1,12 +1,9 @@
 import React, {Component} from "react";
-import {Redirect} from "react-router-dom";
 
 class Account extends Component {
     render() {
-        const {user} = this.props;
-        if(user && !user.verified) return <Redirect to={"/verification"}/>
-        else if(!user) return <Redirect to={"/login"}/>
-
+        // const {user} = this.props;
+        document.title = "Account";
         return (
             <div>
                 <h1>Account</h1>

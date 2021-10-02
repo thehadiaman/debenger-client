@@ -47,11 +47,11 @@ class App extends Component {
                                 <Route exact path={'/login'} render={(props)=><LoginForm {...props} user={user} inverted={inverted}/>} />
                                 <Route exact path={'/forgetpassword'} render={(props)=><ForgetPassword {...props} user={user} inverted={inverted}/>} />
                                 <Route exact path={'/verification'} render={(props)=><Verification {...props} user={user} inverted={inverted}/>} />
-                                <Route exact path={'/404'} render={()=><NotFound inverted={inverted}/>}/>
+                                <Route path={'/404'} render={()=><NotFound inverted={inverted}/>}/>
                                 <ProtectedRoute path={'/mydebates'} render={MyDebates} />
                                 <ProtectedRoute path={'/account'} render={Account} />
                                 <Route exact path={'/logout'} render={()=><Logout />}/>
-                                <ProtectedRoute path={'/'} render={Home} />
+                                <ProtectedRoute exact path={'/'} render={Home} />
                                 <Redirect to={'/404'} />
                             </Switch>
                         </Grid>

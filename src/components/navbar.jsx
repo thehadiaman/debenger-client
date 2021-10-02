@@ -41,6 +41,9 @@ class Navbar extends Component {
     render() {
         const {inverter, inverted, invIcon, user} = this.props;
         const {menu, currentLink} = this.state;
+
+        const dropDownLaunch = <Button inverted={inverted} className="dropdown-btn" style={{borderRadius: 0}}>{user.name}</Button>
+
         return (
             <div>
                 <Segment inverted={inverted} style={{borderRadius: 0, marginBottom: '20px'}}>
@@ -53,6 +56,8 @@ class Navbar extends Component {
                             user={user}
                             inverted={inverted}
                             data={this.state.navbarDropDownData}
+                            component={dropDownLaunch}
+                            className={"dropdown user-btn"}
                         />}
                         <Button style={{backgroundColor: inverted ? 'white': '#393B3B'}}
                                 circular className={'inverter icon'}

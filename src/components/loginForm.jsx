@@ -55,7 +55,7 @@ class LoginForm extends TheForm {
         const {user} = this.props;
         if(user && !user.verified) return <Redirect to={"/verification"}/>
         else if(user && user.verified) return <Redirect to={"/"}/>
-
+        document.title = "Login";
         const forgetPassword = <div>
             <Grid>
                 <Grid.Column>

@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import {Redirect} from "react-router-dom";
 import {Card, Grid} from "semantic-ui-react";
 import Debate from "./common/debate";
 import {getDebates} from "../services/debateService";
@@ -16,13 +15,9 @@ class Home extends Component {
         this.setState({debates});
     }
 
-
     render() {
-
+        document.title = "Home";
         const {user} = this.props;
-        if(user && !user.verified) return <Redirect to={"/verification"}/>
-        else if(!user) return <Redirect to={"/login"}/>
-
         return (
             <Grid centered columns={2}>
                 <Grid.Column>

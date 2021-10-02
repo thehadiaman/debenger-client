@@ -46,10 +46,10 @@ class SignupForm extends TheForm {
     }
 
     render() {
-
         const {user} = this.props;
         if(!user) return <Redirect to={"/login"} />
         else if(user && user.verified) return <Redirect to={"/"} />
+        document.title = "Verification";
 
         const toLogin = <Form.Field as={Link} to={'/'}>
             Already have an account ?.
