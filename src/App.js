@@ -15,11 +15,12 @@ import Home from "./components/home";
 import Logout from "./components/logout";
 import MyDebates from "./components/myDebates";
 import Account from "./components/account";
+import ProtectedRoute from "./components/common/protectedRoute";
 
 class App extends Component {
     state={
         inverted: !!localStorage.getItem('inverted'),
-        invIcon: faSun,
+        invIcon: localStorage.getItem('inverted')? faSun : faMoon,
     };
 
     inverter = () => {
@@ -47,10 +48,10 @@ class App extends Component {
                                 <Route exact path={'/forgetpassword'} render={(props)=><ForgetPassword {...props} user={user} inverted={inverted}/>} />
                                 <Route exact path={'/verification'} render={(props)=><Verification {...props} user={user} inverted={inverted}/>} />
                                 <Route exact path={'/404'} render={()=><NotFound inverted={inverted}/>}/>
-                                <Route exact path={'/mydebates'} render={()=><MyDebates inverted={inverted} user={user} />}/>
-                                <Route exact path={'/account'} render={()=><Account inverted={inverted} user={user} />} />
+                                <ProtectedRoute path={'/mydebates'} render={MyDebates} />
+                                <ProtectedRoute path={'/account'} render={Account} />
                                 <Route exact path={'/logout'} render={()=><Logout />}/>
-                                <Route exact path={'/'} render={(props)=><Home {...props} user={user} inverted={inverted}/>} />
+                                <ProtectedRoute path={'/'} render={Home} />
                                 <Redirect to={'/404'} />
                             </Switch>
                         </Grid>

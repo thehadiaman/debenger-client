@@ -1,0 +1,97 @@
+import React, {Component} from "react";
+import {Button, Card, Grid, Segment} from "semantic-ui-react";
+import Like from "./like";
+import {followDebate, like, unfollowDebate} from "../../services/debateService";
+
+
+class Debate extends Component {
+
+    state={
+        following: false,
+        followingBtnText: "Follow",
+        like: false,
+        likes: this.props.debate.like.likes
+    };
+
+
+    componentDidMount() {
+        const following = this.props.debate.followers.filter(follower=>follower._id === this.props.user._id);
+        if(following.length>0) this.setState({following: true, followingBtnText: "Unfollow"})
+
+        const like = this.props.debate.like.lovers.filter(lover=>lover._id === this.props.user._id);
+        if(like.length>0){
+            this.setState({like: true})
+        }
+    }
+
+
+    handleFollow = async (id) => {
+        if(!this.state.following){
+            try{
+                await followDebate(id);
+                this.setState({following: true, followingBtnText: "Unfollow"})
+            }catch (ex) {
+                console.log(ex.response.data || ex.message);
+            }
+        }else{
+            try{
+                await unfollowDebate(id);
+                this.setState({following: false, followingBtnText: "Follow"})
+            }catch (ex) {
+                console.log(ex.response.data || ex.message);
+            }
+        }
+    };
+
+    handleLike = async(id) => {
+        try{
+            await like(id);
+            if(!this.state.like){
+                this.setState({like: true, likes: this.state.likes+1})
+            }else{
+                this.setState({like: false, likes: this.state.likes-1})
+            }
+        }catch (ex) {
+            console.log(ex.response.data || ex.message);
+        }
+    };
+
+    render() {
+        const {likes} = this.state;
+        const {handleLike, handleFollow} = this;
+        const {title, description, tags, _id} = this.props.debate;
+
+        const header = <div>
+            <Grid container width={10}>
+                <Grid.Column width={5}>
+                    <h1 style={{color: "black"}}>{title}</h1>
+                </Grid.Column>
+                <Grid.Column width={10}>
+                    <Button onClick={()=>handleFollow(_id)} primary floated={'right'}>{this.state.followingBtnText}</Button>
+                </Grid.Column>
+            </Grid>
+        </div>
+
+        return (
+            <Card style={{width: "100%"}}>
+                <Card.Content header={header} />
+                <Card.Content description={description} />
+                <Card.Content extra>
+                    Tags: {tags.map(tag=><b key={tag}> {tag},  </b>)}
+                </Card.Content>
+                <Card.Content extra>
+                    <Grid container width={5}>
+                        <Grid.Column>
+                            <Like liked={this.state.like} handleLike={handleLike} id={_id}/>
+                        </Grid.Column>
+                        <Grid.Column width={3}>
+                            <div className={'likes-box'}>{likes > 0 ? `${likes} ${likes === 1 ? "like": "likes"}` : ""}</div>
+                        </Grid.Column>
+                    </Grid>
+                </Card.Content>
+            </Card>
+        );
+    }
+}
+
+export default Debate;
