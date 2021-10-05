@@ -7,6 +7,10 @@ export async function getDebates(){
     return await http.get(apiEndPoint);
 }
 
+export async function getDebate(id){
+    return (await http.get(`${apiEndPoint}/${id}`)).data;
+}
+
 export function followDebate(id){
     return http.get(`${apiEndPoint}/follow/${id}`);
 }
@@ -19,6 +23,11 @@ export function like(id){
     return http.get(`${apiEndPoint}/like/${id}`);
 }
 
-export function deleteOne(id){
+export function deleteDebate(id){
     return http.delete(`${apiEndPoint}/${id}`);
 }
+
+export function updateDebate(id, body){
+    return http.put(`${apiEndPoint}/${id}`, body);
+}
+

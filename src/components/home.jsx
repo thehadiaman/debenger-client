@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Grid, Input} from "semantic-ui-react";
 import Debate from "./common/debate";
-import {deleteOne, getDebates} from "../services/debateService";
+import {deleteDebate, getDebates} from "../services/debateService";
 import AskModal from "./common/askModal";
 
 class Home extends Component {
@@ -33,11 +33,11 @@ class Home extends Component {
         let debates = [...this.state.debates];
         debates = debates.filter(debate=>debate._id!==id);
         this.setState({debates});
-        await deleteOne(id)
+        await deleteDebate(id)
     }
 
     handleEdit = (id) => {
-        console.log('Editing '+id);
+        this.props.history.push(`/debate/${id}`)
     }
 
     handleSearch = async(input)=>{

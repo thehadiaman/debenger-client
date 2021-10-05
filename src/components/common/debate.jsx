@@ -5,9 +5,9 @@ import {followDebate, like, unfollowDebate} from "../../services/debateService";
 import ModalMenu from "./modelMenu";
 import {faEdit} from "@fortawesome/free-regular-svg-icons";
 import {faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+import MessageIcon from "./messageIcon";
 
 class Debate extends Component {
-
 
     state={
         following: false,
@@ -78,9 +78,9 @@ class Debate extends Component {
         const {title, description, tags, _id} = this.props.debate;
 
         const header = <div>
-            <Grid container width={10}>
-                <Grid.Column width={5}>
-                    <p style={{color: "black", fontSize: '20px', fontWeight: "bold"}}>{title.toUpperCase()}</p>
+            <Grid>
+                <Grid.Column>
+                    <p style={{color: "black", fontSize: '20px', width: "100%", fontWeight: "bold"}}>{title.toUpperCase()}</p>
                 </Grid.Column>
             </Grid>
         </div>
@@ -94,10 +94,13 @@ class Debate extends Component {
                 </Card.Content>
                 <Card.Content extra>
                     <Grid columns={'equal'}>
-                        <Grid.Column>
+                        <Grid.Column style={{display: 'inline-flex'}}>
                             <div className={'likes-box'}>
                                 <Like liked={like} handleLike={handleLike} id={_id}/>
                                 {likes > 0 ? `${likes} ${likes === 1 ? "like": "likes"}` : ""}
+                            </div>
+                            <div className={'likes-box'}>
+                                <MessageIcon/>
                             </div>
                         </Grid.Column>
                         <Grid.Column>
@@ -105,7 +108,7 @@ class Debate extends Component {
                         </Grid.Column>
                     </Grid>
                 </Card.Content>
-                {edit && <Card.Content extra style={{textAlign: 'center', color: 'black'}}>
+                {edit && <Card.Content extra style={{textAlign: 'center', color: 'black', backgroundColor: '#a1a1a1'}}>
                     <ModalMenu title={title} menu={this.state.editMenu} id={_id}/>
                 </Card.Content>}
             </Card>

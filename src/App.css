@@ -52,6 +52,7 @@ body{
     font-weight: bolder;
 }
 
+
 .edit-btn{
     position: absolute;
     top: 10px;
@@ -62,4 +63,5 @@ body{
 
 .modal-menu-item{
     padding: 20px;
+    color: #a1a1a1;
 }

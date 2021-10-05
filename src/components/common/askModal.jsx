@@ -18,26 +18,24 @@ class AskModal extends Component {
                 size='small'
             >
                 <Header icon>
-                    <Icon name='archive' />
-                    Are you sure to delete "{this.props.state.deleteTitle}"?.
+                    <Icon name='trash' />
+                    Are you sure to delete "{this.props.state.deleteTitle}" ?.
                 </Header>
-                <Modal.Content>
-                    <p>
-                        This action is irreversible
-                    </p>
+                <Modal.Content style={{textAlign: 'center'}}>
+                        <h3 style={{color: 'red'}}>This action is irreversible</h3>
                 </Modal.Content>
-                <Modal.Actions>
-                    <Button basic color='green' inverted onClick={() => {
+                <Modal.Actions style={{textAlign: 'center'}}>
+                    <Button color='green' inverted onClick={() => {
                         this.setState({open: false})
                         this.props.handleDeleteReject();
                     }}>
-                        <Icon name='remove' /> No
+                        <Icon name='remove' /> Cancel
                     </Button>
-                    <Button basic color='red' inverted onClick={() => {
+                    <Button color='red' inverted onClick={() => {
                         this.setState({open: false})
                         this.props.handleDeleteApprove();
                     }}>
-                        <Icon name='checkmark' /> Yes
+                        <Icon name='checkmark' /> Conform
                     </Button>
                 </Modal.Actions>
             </Modal>
