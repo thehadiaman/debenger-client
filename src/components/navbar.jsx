@@ -12,14 +12,13 @@ class Navbar extends Component {
         navbarDropDownData: [
             {name: 'Account', link: '/account'},
             {name: 'Logout', link: '/logout'}
-        ],
-        currentLink: '/'
+        ]
     }
 
     setupMenu = () => {
         if(!authUser()){
             const menu = [{name: 'login', to:'/login'}, {name: 'signup', to:'/signup'}];
-            this.setState({menu, currentLink: '/login'});
+            this.setState({menu});
         }
         else {
 
@@ -33,14 +32,10 @@ class Navbar extends Component {
         this.setupMenu()
     }
 
-    handleActiveLink = (link) => {
-        this.setState({currentLink: link})
-    }
-
 
     render() {
         const {inverter, inverted, invIcon, user} = this.props;
-        const {menu, currentLink} = this.state;
+        const {menu} = this.state;
 
         const dropDownLaunch = user && <Button inverted={inverted} className="dropdown-btn" style={{borderRadius: 0}}>{user.name}</Button>;
 
@@ -51,7 +46,7 @@ class Navbar extends Component {
                         <Menu.Item>
                             <h3>Debenger</h3>
                         </Menu.Item>
-                        {menu.map(menu=><NavMenu key={menu.name} name={menu.name} currentLink={currentLink} to={menu.to} handleActiveLink={this.handleActiveLink}/>)}
+                        {menu.map(menu=><NavMenu {...this} key={menu.name} name={menu.name}to={menu.to}/>)}
                         {user && <DropDown
                             user={user}
                             inverted={inverted}

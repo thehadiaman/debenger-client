@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, Grid, Input} from "semantic-ui-react";
+import {Button, Grid} from "semantic-ui-react";
 import Debate from "./common/debate";
 import {deleteDebate, getDebates} from "../services/debateService";
 import AskModal from "./common/askModal";
