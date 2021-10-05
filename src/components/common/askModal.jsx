@@ -23,8 +23,7 @@ class AskModal extends Component {
                 </Header>
                 <Modal.Content>
                     <p>
-                        Your inbox is getting full, would you like us to enable automatic
-                        archiving of old messages?
+                        This action is irreversible
                     </p>
                 </Modal.Content>
                 <Modal.Actions>
