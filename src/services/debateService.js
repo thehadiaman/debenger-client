@@ -18,3 +18,7 @@ export function unfollowDebate(id){
 export function like(id){
     return http.get(`${apiEndPoint}/like/${id}`);
 }
+
+export function deleteOne(id){
+    return http.delete(`${apiEndPoint}/${id}`);
+}

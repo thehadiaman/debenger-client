@@ -10,6 +10,7 @@ class ProtectedRoute extends Component {
             <Route
                 exact={true}
                 path={path}
+                inverted={inverted}
                 render={(props)=>{
                     if(user && !user.verified) return <Redirect to={"/verification"}/>
                     else if(!user) return <Redirect to={"/login"} />

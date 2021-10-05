@@ -2,24 +2,24 @@ import React, {Component} from "react";
 import {Button, Card, Grid} from "semantic-ui-react";
 import Like from "./like";
 import {followDebate, like, unfollowDebate} from "../../services/debateService";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
-import DropDown from "./dropDown";
+import ModalMenu from "./modelMenu";
+import {faEdit} from "@fortawesome/free-regular-svg-icons";
+import {faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 
 class Debate extends Component {
+
 
     state={
         following: false,
         followingBtnText: "Follow",
         like: false,
-        likes: this.props.debate.like.likes,
+        likes: this.props.debate.like? this.props.debate.like.likes : 0,
         edit: false,
         editMenu: [
-            {name: 'Edit', link: '/edit'},
-            {name: 'Delete', link: '/delete'}
+            {name: 'Edit', icon: faEdit, handleClick: this.props.handleEdit},
+            {name: 'Delete', icon: faTrashAlt, handleClick: this.props.handleDelete, }
         ]
-    };
-
+    }
 
     componentDidMount() {
 
@@ -28,7 +28,7 @@ class Debate extends Component {
         const following = debate.followers.filter(follower=>follower._id === user._id);
         if(following.length>0) this.setState({following: true, followingBtnText: "Unfollow"})
 
-        const like = debate.like.lovers.filter(lover=>lover._id === user._id);
+        const like = debate.like? debate.like.lovers.filter(lover=>lover._id === user._id) : 0;
         if(like.length>0){
             this.setState({like: true})
         }
@@ -82,15 +82,9 @@ class Debate extends Component {
                 <Grid.Column width={5}>
                     <p style={{color: "black", fontSize: '20px', fontWeight: "bold"}}>{title.toUpperCase()}</p>
                 </Grid.Column>
-                <Grid.Column width={10}>
-                    <Button onClick={()=>handleFollow(_id)} primary floated={'right'}>{followingBtnText}</Button>
-                </Grid.Column>
-                {
-
-                }
             </Grid>
         </div>
-        const dropDownLaunch = <FontAwesomeIcon icon={faEllipsisV} size={"2x"}/>;
+
         return (
             <Card style={{width: "100%"}}>
                 <Card.Content header={header} />
@@ -99,22 +93,21 @@ class Debate extends Component {
                     Tags: {tags.map(tag=><b key={tag}> {tag},  </b>)}
                 </Card.Content>
                 <Card.Content extra>
-                    <Grid container width={5}>
+                    <Grid columns={'equal'}>
                         <Grid.Column>
-                            <Like liked={like} handleLike={handleLike} id={_id}/>
+                            <div className={'likes-box'}>
+                                <Like liked={like} handleLike={handleLike} id={_id}/>
+                                {likes > 0 ? `${likes} ${likes === 1 ? "like": "likes"}` : ""}
+                            </div>
                         </Grid.Column>
-                        <Grid.Column width={3}>
-                            <div className={'likes-box'}>{likes > 0 ? `${likes} ${likes === 1 ? "like": "likes"}` : ""}</div>
+                        <Grid.Column>
+                                <Button onClick={()=>handleFollow(_id)} primary floated={'right'}>{followingBtnText}</Button>
                         </Grid.Column>
-                        {edit && <div className={"edit-btn"}>
-                            <DropDown
-                                data={this.state.editMenu}
-                                component={dropDownLaunch}
-                                className={"dropdown"}
-                            />
-                        </div>}
                     </Grid>
                 </Card.Content>
+                {edit && <Card.Content extra style={{textAlign: 'center', color: 'black'}}>
+                    <ModalMenu title={title} menu={this.state.editMenu} id={_id}/>
+                </Card.Content>}
             </Card>
         );
     }
