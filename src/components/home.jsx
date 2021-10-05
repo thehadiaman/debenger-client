@@ -1,8 +1,10 @@
 import React, {Component} from "react";
-import {Grid, Input} from "semantic-ui-react";
+import {Button, Grid, Input} from "semantic-ui-react";
 import Debate from "./common/debate";
 import {deleteDebate, getDebates} from "../services/debateService";
 import AskModal from "./common/askModal";
+import SearchBox from "./common/searchBox";
+import {Link} from "react-router-dom";
 
 class Home extends Component {
 
@@ -59,15 +61,10 @@ class Home extends Component {
                 <AskModal trigger={this.state.trigger} {...this}/>
                 <Grid.Row>
                     <Grid.Column width={13}>
-                        <Input
-                            name={'search'}
-                            fluid
-                            icon={'search'}
-                            placeholder='Search...'
-                            onChange={this.handleSearch}
-                        />
+                        <Button as={Link} to={'/debate/new'} primary>Host new debate</Button>
                     </Grid.Column>
                 </Grid.Row>
+                <SearchBox handleSearch={this.handleSearch}/>
                 <Grid.Row>
                     <Grid.Column width={13}>
                         {this.state.debates.map(debate=><Debate {...this} key={debate._id} user={user} debate={debate}/>)}

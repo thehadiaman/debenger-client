@@ -31,3 +31,6 @@ export function updateDebate(id, body){
     return http.put(`${apiEndPoint}/${id}`, body);
 }
 
+export function saveDebate(body){
+    return http.post(`${apiEndPoint}/`, body);
+}

@@ -2,7 +2,7 @@ import React from "react";
 import {Grid} from "semantic-ui-react";
 import TheForm from "./common/theForm";
 import Joi from "joi-browser";
-import {getDebate, updateDebate} from "../services/debateService";
+import {getDebate, saveDebate, updateDebate} from "../services/debateService";
 
 class DebateForm extends TheForm {
 
@@ -45,6 +45,8 @@ class DebateForm extends TheForm {
             }catch (ex) {
                 console.log(ex);
             }
+        }else{
+            this.setState({newDebate: true})
         }
     }
 
@@ -65,18 +67,29 @@ class DebateForm extends TheForm {
     };
 
     doSubmit = async () => {
-        const {id} = this.state;
-        try {
-            await updateDebate(id, this.getData());
-            this.props.history.replace('/');
-        }catch (ex){
-            console.log(ex);
+        if(!this.state.newDebate){
+            const {id} = this.state;
+            try {
+                await updateDebate(id, this.getData());
+                this.props.history.replace('/');
+            }catch (ex){
+                console.log(ex);
+            }
+        }else{
+            try {
+                await saveDebate(this.getData());
+                this.props.history.replace('/');
+            }catch (ex){
+                console.log(ex);
+            }
         }
     }
 
     render() {
 
-        document.title = "Debate";
+        const {inputs} = this.state;
+
+        document.title = inputs.filter(input=>input.name==='title')[0].value || "New Debate";
 
         const extra = <div/>;
 
@@ -85,7 +98,7 @@ class DebateForm extends TheForm {
                 <Grid container columns={3}>
                     <Grid.Column/>
                     <Grid.Column>
-                        {this.renderForm('Debate', extra, 'Save')}
+                        {this.renderForm(document.title, extra, 'Save')}
                     </Grid.Column>
                 </Grid>
             </React.Fragment>
