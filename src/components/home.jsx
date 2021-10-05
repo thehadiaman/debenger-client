@@ -1,12 +1,12 @@
-import React, {Component} from "react";
-import {Button, Grid} from "semantic-ui-react";
+import React from "react";
+import {Grid} from "semantic-ui-react";
 import Debate from "./common/debate";
-import {deleteDebate, getDebates} from "../services/debateService";
+import {getDebates} from "../services/debateService";
 import AskModal from "./common/askModal";
 import SearchBox from "./common/searchBox";
-import {Link} from "react-router-dom";
+import CommonHomePage from "./common/commonHomePage";
 
-class Home extends Component {
+class Home extends CommonHomePage {
 
     state={
         debates:[],
@@ -21,26 +21,7 @@ class Home extends Component {
         this.setState({debates});
     }
 
-    handleDelete = async (id, title) => {
-        this.setState({trigger: true, deleteId: id, deleteTitle:title});
-    }
 
-    handleDeleteReject = ()=>{
-        this.setState({trigger: false, deleteId: '', deleteTitle:''});
-    }
-
-    handleDeleteApprove = async()=>{
-        const id = this.state.deleteId;
-        this.setState({trigger: false, deleteId: '', deleteTitle:''});
-        let debates = [...this.state.debates];
-        debates = debates.filter(debate=>debate._id!==id);
-        this.setState({debates});
-        await deleteDebate(id)
-    }
-
-    handleEdit = (id) => {
-        this.props.history.push(`/debate/${id}`)
-    }
 
     handleSearch = async(input)=>{
         this.setState({searchString: input.target.value})
@@ -59,11 +40,7 @@ class Home extends Component {
         return (
             <Grid centered>
                 <AskModal trigger={this.state.trigger} {...this}/>
-                <Grid.Row>
-                    <Grid.Column width={13}>
-                        <Button as={Link} to={'/debate/new'} primary>Host new debate</Button>
-                    </Grid.Column>
-                </Grid.Row>
+                {this.addNewBtn()}
                 <SearchBox handleSearch={this.handleSearch}/>
                 <Grid.Row>
                     <Grid.Column width={13}>

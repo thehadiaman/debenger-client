@@ -34,3 +34,7 @@ export function updateDebate(id, body){
 export function saveDebate(body){
     return http.post(`${apiEndPoint}/`, body);
 }
+
+export async function geyMyDebates(id){
+    return (await http.get(`${apiEndPoint}/mydebates?id=${id}`)).data;
+}

@@ -1,15 +1,53 @@
-import React, {Component} from "react";
+import React from "react";
+import {geyMyDebates} from "../services/debateService";
+import CommonHomePage from "./common/commonHomePage";
+import {Grid} from "semantic-ui-react";
+import AskModal from "./common/askModal";
+import SearchBox from "./common/searchBox";
+import Debate from "./common/debate";
 
-class MyDebates extends Component {
+class MyDebates extends CommonHomePage {
+
+    state={
+        debates:[],
+        searchString: '',
+        trigger: false,
+        deleteId: ''
+    };
+
+    async componentDidMount() {
+        const debates = await geyMyDebates(this.props.user._id)
+        this.setState({debates});
+    }
+
+    handleSearch = async(input)=>{
+        this.setState({searchString: input.target.value})
+        let debates;
+        if(input.target.value.trim()==='')
+            debates = await geyMyDebates(this.props.user._id);
+        else
+            debates = (await geyMyDebates(this.props.user._id)).filter(debate=>debate.title.toLowerCase().includes(input.target.value.toLowerCase()));
+
+        this.setState({debates});
+    }
+
+
+
     render() {
 
         // const {user} = this.props;
-        document.title = "My Debates"
-
+        document.title = "My debates";
+        const {user} = this.props;
         return (
-            <div>
-                <h1>My Debates</h1>
-            </div>
+            <Grid centered>
+                <AskModal trigger={this.state.trigger} {...this}/>
+                <SearchBox handleSearch={this.handleSearch}/>
+                <Grid.Row>
+                    <Grid.Column width={13}>
+                        {this.state.debates.map(debate=><Debate {...this} key={debate._id} user={user} debate={debate}/>)}
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
         );
     }
 }
