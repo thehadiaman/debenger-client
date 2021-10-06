@@ -72,7 +72,6 @@ class Home extends CommonHomePage {
                         {this.state.debates.map(debate=><Debate {...this} key={debate._id} user={user} debate={debate}/>)}
                         {pagination}
                     </Grid.Column>
-
                 </Grid.Row>
             </Grid>
         );

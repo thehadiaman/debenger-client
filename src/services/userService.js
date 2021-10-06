@@ -10,3 +10,7 @@ export function signup(body){
 export function verification(body){
     return http.post(`${apiEndPoint}/verification`, {verificationCode: body.verificationCode});
 }
+
+export async function getAccountData(){
+    return (await http.get(`${apiEndPoint}/me`)).data;
+}

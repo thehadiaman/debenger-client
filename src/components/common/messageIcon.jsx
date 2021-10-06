@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentAlt } from '@fortawesome/free-solid-svg-icons';
 import { faCommentAlt as solidComment } from '@fortawesome/free-regular-svg-icons';
+import {Link} from "react-router-dom";
 
 class MessageIcon extends Component {
 
@@ -19,13 +20,13 @@ class MessageIcon extends Component {
     }
 
     render() {
-        const {liked, id, handleMessageClick} = this.props;
+        const {liked, id} = this.props;
 
         let like = liked ? faCommentAlt: this.state.heart;
         let color = liked ? 'red': this.state.heartColor;
-        return (<div onMouseOver={this.handleMouseOver} title={"Messages"} onMouseOut={this.handleMouseOut}>
+        return (<Link to={`message/${id}`} onMouseOver={this.handleMouseOver} title={"Messages"} onMouseOut={this.handleMouseOut}>
             <FontAwesomeIcon icon={like} color={color} size={'2x'} onClick={()=>{}}/>
-        </div>);
+        </Link>);
     }
 }
 

@@ -82,7 +82,7 @@ class Debate extends Component {
             <Grid>
                 <Grid.Row>
                     <Grid.Column>
-                        <Link to={`debate/${_id}`} className={'debate-heading black'}>{title.toUpperCase()}</Link>
+                        <Link to={`message/${_id}`} className={'debate-heading black'}>{title.toUpperCase()}</Link>
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
@@ -96,7 +96,7 @@ class Debate extends Component {
                     Tags: {tags.map(tag=><b key={tag}> {tag},  </b>)}
                 </Card.Content>
                 <Card.Content extra>
-                    Hosted by: <b><Link title={this.props.debate.host.name} to={`/${this.props.debate.host._id}`}>{this.props.debate.host.name}</Link></b>
+                    Hosted by: <b><Link title={this.props.debate.host.name} to={`user/${this.props.debate.host._id}`}>{this.props.debate.host.name}</Link></b>
                 </Card.Content>
                 <Card.Content extra>
                     <Grid columns={'equal'}>
@@ -106,7 +106,7 @@ class Debate extends Component {
                                 {likes > 0 ? `${likes} ${likes === 1 ? "like": "likes"}` : ""}
                             </div>
                             <div className={'likes-box'}>
-                                <MessageIcon/>
+                                <MessageIcon id={this.props.debate._id}/>
                             </div>
                         </Grid.Column>
                         <Grid.Column>
@@ -115,7 +115,7 @@ class Debate extends Component {
                     </Grid>
                 </Card.Content>
                 {edit && <Card.Content extra style={{textAlign: 'center', color: 'black', backgroundColor: '#a1a1a1'}}>
-                    <ModalMenu title={title} menu={this.state.editMenu} id={_id}/>
+                    <ModalMenu title={title} menu={this.state.editMenu} id={_id} trigger={<Button circular>More...</Button>}/>
                 </Card.Content>}
             </Card>
         );

@@ -2,7 +2,7 @@ import React from 'react'
 import {Menu, Modal} from "semantic-ui-react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function ModalMenu({menu, id, title}) {
+function ModalMenu({menu, id, title, trigger}) {
     const [open, setOpen] = React.useState(false)
 
     return (
@@ -10,7 +10,7 @@ function ModalMenu({menu, id, title}) {
             onClose={() => setOpen(false)}
             onOpen={() => setOpen(true)}
             open={open}
-            trigger={<p style={{cursor: 'pointer'}}>More...</p>}
+            trigger={trigger}
             as={Menu}
             vertical>
             {menu.map(item=><Menu.Item
