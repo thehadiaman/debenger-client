@@ -46,7 +46,7 @@ class Navbar extends Component {
                         <Menu.Item>
                             <h3>Debenger</h3>
                         </Menu.Item>
-                        {menu.map(menu=><NavMenu {...this} key={menu.name} name={menu.name}to={menu.to}/>)}
+                        {menu.map(menu=><NavMenu {...this} key={menu.name} name={menu.name} to={menu.to}/>)}
                         {user && <DropDown
                             user={user}
                             inverted={inverted}

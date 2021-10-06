@@ -5,6 +5,8 @@ import {getDebates} from "../services/debateService";
 import AskModal from "./common/askModal";
 import SearchBox from "./common/searchBox";
 import CommonHomePage from "./common/commonHomePage";
+import Pagination from "./common/pagination";
+import {useLocation} from "react-router-dom/cjs/react-router-dom";
 
 class Home extends CommonHomePage {
 
@@ -37,14 +39,16 @@ class Home extends CommonHomePage {
     render() {
         document.title = "Home";
         const {user} = this.props;
+        console.log(this.props);
         return (
             <Grid centered>
                 <AskModal trigger={this.state.trigger} {...this}/>
                 {this.addNewBtn()}
                 <SearchBox handleSearch={this.handleSearch}/>
                 <Grid.Row>
-                    <Grid.Column width={13}>
+                    <Grid.Column mobile={16} largeScreen={13} widescreen={13}>
                         {this.state.debates.map(debate=><Debate {...this} key={debate._id} user={user} debate={debate}/>)}
+                        <Pagination totalPages={10} activePage={1}/>
                     </Grid.Column>
                 </Grid.Row>
             </Grid>

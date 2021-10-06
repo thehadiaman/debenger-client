@@ -1,9 +1,9 @@
-import React, {Component} from "react";
+import React, {Component, createRef} from "react";
 import './App.css';
 import Navbar from "./components/navbar";
 import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
 import 'semantic-ui-css/semantic.min.css'
-import {Container, Grid} from "semantic-ui-react";
+import {Container, Grid, Sticky} from "semantic-ui-react";
 import LoginForm from "./components/loginForm";
 import Verification from "./components/verification";
 import SignupForm from "./components/signupForm";
@@ -33,14 +33,16 @@ class App extends Component {
         this.setState({inverted: !inverted, invIcon});
     }
 
+    contextRef = createRef()
+
     render() {
         const {inverted, invIcon} = this.state;
         const user = authUser()
         document.body.style.backgroundColor = inverted ? '#393B3B': 'white';
         return (
-            <div style={{color: inverted ? 'white': '#393B3B'}}>
+            <div style={{color: inverted ? 'white': '#393B3B'}} ref={this.contextRef}>
                 <BrowserRouter>
-                    <Navbar inverted={inverted} inverter={this.inverter} invIcon={invIcon} user={user}/>
+                    <Sticky context={this.contextRef} pushing={false} ><Navbar inverted={inverted} inverter={this.inverter} invIcon={invIcon} user={user}/></Sticky>
                     <Container>
                         <Grid stackable columns={1}>
                             <Switch>

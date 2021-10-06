@@ -4,7 +4,7 @@ import {Grid, Input} from "semantic-ui-react";
 const SearchBox = ({handleSearch})=>{
     return(
         <Grid.Row>
-            <Grid.Column width={13}>
+            <Grid.Column mobile={16} largeScreen={13} widescreen={13}>
                 <Input
                     name={'search'}
                     fluid

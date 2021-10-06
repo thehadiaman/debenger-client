@@ -6,6 +6,7 @@ import ModalMenu from "./modelMenu";
 import {faEdit} from "@fortawesome/free-regular-svg-icons";
 import {faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 import MessageIcon from "./messageIcon";
+import {Link} from "react-router-dom";
 
 class Debate extends Component {
 
@@ -79,9 +80,12 @@ class Debate extends Component {
 
         const header = <div>
             <Grid>
-                <Grid.Column>
-                    <p style={{color: "black", fontSize: '20px', width: "100%", fontWeight: "bold"}}>{title.toUpperCase()}</p>
-                </Grid.Column>
+                <Grid.Row>
+                    <Grid.Column>
+                        <p className={'debate-heading'}>{title.toUpperCase()}
+                        </p>
+                    </Grid.Column>
+                </Grid.Row>
             </Grid>
         </div>
 
@@ -91,6 +95,9 @@ class Debate extends Component {
                 <Card.Content description={description} />
                 <Card.Content extra>
                     Tags: {tags.map(tag=><b key={tag}> {tag},  </b>)}
+                </Card.Content>
+                <Card.Content extra>
+                    Hosted by: <Link to={`/${this.props.debate.host._id}`}>{this.props.debate.host.name}</Link>
                 </Card.Content>
                 <Card.Content extra>
                     <Grid columns={'equal'}>

@@ -34,11 +34,10 @@ class CommonHomePage extends Component {
     }
 
     addNewBtn = ()=>{
-        return(<Grid.Row>
-            <Grid.Column width={13}>
-                <Button as={Link} to={'/debate/new'} primary>Host new debate</Button>
-            </Grid.Column>
-        </Grid.Row>)
+        return(
+            <Grid.Column mobile={16} largeScreen={13} widescreen={13}>
+                <Button floated={'left'} as={Link} to={'/debate/new'} primary>Host new debate</Button>
+            </Grid.Column>)
     }
 
 }
