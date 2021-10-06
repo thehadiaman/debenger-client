@@ -82,8 +82,7 @@ class Debate extends Component {
             <Grid>
                 <Grid.Row>
                     <Grid.Column>
-                        <p className={'debate-heading'}>{title.toUpperCase()}
-                        </p>
+                        <Link to={`debate/${_id}`} className={'debate-heading black'}>{title.toUpperCase()}</Link>
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
@@ -97,7 +96,7 @@ class Debate extends Component {
                     Tags: {tags.map(tag=><b key={tag}> {tag},  </b>)}
                 </Card.Content>
                 <Card.Content extra>
-                    Hosted by: <Link to={`/${this.props.debate.host._id}`}>{this.props.debate.host.name}</Link>
+                    Hosted by: <b><Link title={this.props.debate.host.name} to={`/${this.props.debate.host._id}`}>{this.props.debate.host.name}</Link></b>
                 </Card.Content>
                 <Card.Content extra>
                     <Grid columns={'equal'}>
@@ -111,7 +110,7 @@ class Debate extends Component {
                             </div>
                         </Grid.Column>
                         <Grid.Column>
-                                <Button onClick={()=>handleFollow(_id)} primary floated={'right'}>{followingBtnText}</Button>
+                                <Button title={followingBtnText} onClick={()=>handleFollow(_id)} primary floated={'right'}>{followingBtnText}</Button>
                         </Grid.Column>
                     </Grid>
                 </Card.Content>

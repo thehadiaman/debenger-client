@@ -3,8 +3,8 @@ import config from "./config.json";
 
 const apiEndPoint = `${config.apiUrl}/debate`;
 
-export async function getDebates(){
-    return await http.get(apiEndPoint);
+export async function getDebates(page=1){
+    return await http.get(`${apiEndPoint}/?page=${page}`);
 }
 
 export async function getDebate(id){
@@ -35,6 +35,7 @@ export function saveDebate(body){
     return http.post(`${apiEndPoint}/`, body);
 }
 
-export async function geyMyDebates(id){
-    return (await http.get(`${apiEndPoint}/mydebates?id=${id}`)).data;
+export async function getMyDebates(page, id){
+    console.log(id);
+    return (await http.get(`${apiEndPoint}/mydebates/?page=${page}&&id=${id}`));
 }

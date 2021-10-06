@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {deleteDebate} from "../../services/debateService";
 import {Button, Grid} from "semantic-ui-react";
 import {Link} from "react-router-dom";
+import Pagination from "./pagination";
 
 class CommonHomePage extends Component {
 
@@ -38,6 +39,11 @@ class CommonHomePage extends Component {
             <Grid.Column mobile={16} largeScreen={13} widescreen={13}>
                 <Button floated={'left'} as={Link} to={'/debate/new'} primary>Host new debate</Button>
             </Grid.Column>)
+    }
+
+    renderPagination = (activePage, totalPages)=>{
+        if(totalPages>1)
+            return <Pagination activePage={activePage} totalPages={totalPages} handlePagination={this.handlePagination}/>
     }
 
 }

@@ -23,7 +23,7 @@ class MessageIcon extends Component {
 
         let like = liked ? faCommentAlt: this.state.heart;
         let color = liked ? 'red': this.state.heartColor;
-        return (<div onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
+        return (<div onMouseOver={this.handleMouseOver} title={"Messages"} onMouseOut={this.handleMouseOut}>
             <FontAwesomeIcon icon={like} color={color} size={'2x'} onClick={()=>{}}/>
         </div>);
     }

@@ -23,7 +23,7 @@ class Like extends Component {
 
         let like = liked ? faHeart: this.state.heart;
         let color = liked ? 'red': this.state.heartColor;
-        return (<div onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
+        return (<div onMouseOver={this.handleMouseOver} title={"like"} onMouseOut={this.handleMouseOut}>
             <FontAwesomeIcon icon={like} color={color} size={'2x'} onClick={()=>handleLike(id)}/>
         </div>);
     }

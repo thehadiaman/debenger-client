@@ -1,21 +1,36 @@
-import * as React from "react";
 import {Menu} from "semantic-ui-react";
 import {Link} from "react-router-dom";
 
-function NavMenu(props) {
-    const {name, to} = props;
-    console.log(window.location.pathname);
-    return (
-        <div>
-            <Menu.Item
-                active={to===window.location.pathname}
-                as={Link}
-                name={name}
-                to={to}
-                onClick={()=>props.setupMenu()}
-            />
-        </div>
-    );
-};
+import React, {Component} from "react";
 
+class NavMenu extends Component {
+
+
+    state={
+        path: window.location.pathname
+    }
+
+    componentDidMount() {
+        setInterval(()=>{
+            if(this.state.path!==window.location.pathname)
+                this.setState({path: window.location.pathname})
+        }, 500)
+    }
+
+
+    render() {
+        const {name, to, setupMenu} = this.props;
+        return (
+            <div>
+                <Menu.Item
+                    active={to===this.state.path}
+                    as={Link}
+                    name={name}
+                    to={to}
+                    onClick={()=>setupMenu()}
+                />
+            </div>
+        );
+    }
+}
 export default NavMenu;
