@@ -1,7 +1,7 @@
 import React from "react";
 import {getMyDebates, searchDebate} from "../services/debateService";
 import CommonHomePage from "./common/commonHomePage";
-import {Container, Grid} from "semantic-ui-react";
+import {Grid} from "semantic-ui-react";
 import AskModal from "./common/askModal";
 import SearchBox from "./common/searchBox";
 import Debate from "./common/debate";
@@ -24,7 +24,6 @@ class MyDebates extends CommonHomePage {
             activePage = this.props.history.location.search.split('?')[1].split('=')[1];
             debates = (await getMyDebates(activePage, this.props.user._id)).data;
 
-            console.log(debates[1]);
             if(activePage>debates[1]) {
                 activePage = 1;
                 debates = (await getMyDebates(activePage, this.props.user._id)).data;

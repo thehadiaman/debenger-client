@@ -21,7 +21,7 @@ function ModalList({trigger, title, menuList}) {
                     </Message>}
                     {menuList.length>=0 && menuList.map(item=>{
                         return <Message key={item._id}>
-                            <Link to={`message/${item._id}`}>{item.title}</Link>
+                            <Link to={`/message/${item._id}`}>{item.title}</Link>
                         </Message>
                     })}
                 </Modal.Description>

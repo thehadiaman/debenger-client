@@ -1,14 +1,14 @@
-import React, {Component} from "react";
+import React from "react";
 import {Button, Card, Grid} from "semantic-ui-react";
 import Like from "./like";
-import {followDebate, like, unfollowDebate} from "../../services/debateService";
 import ModalMenu from "./modelMenu";
 import {faEdit} from "@fortawesome/free-regular-svg-icons";
 import {faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 import MessageIcon from "./messageIcon";
 import {Link} from "react-router-dom";
+import CommonDebate from "./commonDebate";
 
-class Debate extends Component {
+class Debate extends CommonDebate {
 
     state={
         following: false,
@@ -25,7 +25,6 @@ class Debate extends Component {
     componentDidMount() {
 
         const {debate, user} = this.props;
-
         const following = debate.followers.filter(follower=>follower._id === user._id);
         if(following.length>0) this.setState({following: true, followingBtnText: "Unfollow"})
 
@@ -38,40 +37,7 @@ class Debate extends Component {
         if(host){
             this.setState({edit: true})
         }
-
     }
-
-
-    handleFollow = async (id) => {
-        if(!this.state.following){
-            try{
-                await followDebate(id);
-                this.setState({following: true, followingBtnText: "Unfollow"})
-            }catch (ex) {
-                console.log(ex.response.data || ex.message);
-            }
-        }else{
-            try{
-                await unfollowDebate(id);
-                this.setState({following: false, followingBtnText: "Follow"})
-            }catch (ex) {
-                console.log(ex.response.data || ex.message);
-            }
-        }
-    };
-
-    handleLike = async(id) => {
-        try{
-            await like(id);
-            if(!this.state.like){
-                this.setState({like: true, likes: this.state.likes+1})
-            }else{
-                this.setState({like: false, likes: this.state.likes-1})
-            }
-        }catch (ex) {
-            console.log(ex.response.data || ex.message);
-        }
-    };
 
     render() {
         const {likes, like, followingBtnText,  edit} = this.state;
@@ -82,7 +48,7 @@ class Debate extends Component {
             <Grid>
                 <Grid.Row>
                     <Grid.Column>
-                        <Link to={`message/${_id}`} className={'debate-heading black'}>{title.toUpperCase()}</Link>
+                        <Link to={`/message/${_id}`} className={'debate-heading black'}>{title.toUpperCase()}</Link>
                     </Grid.Column>
                 </Grid.Row>
             </Grid>

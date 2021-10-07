@@ -1,6 +1,5 @@
 import {Menu} from "semantic-ui-react";
 import {Link} from "react-router-dom";
-
 import React, {Component} from "react";
 
 class NavMenu extends Component {
@@ -10,7 +9,7 @@ class NavMenu extends Component {
         path: window.location.pathname
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         setInterval(()=>{
             if(this.state.path!==window.location.pathname)
                 this.setState({path: window.location.pathname})

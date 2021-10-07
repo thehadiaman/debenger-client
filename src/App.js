@@ -17,6 +17,7 @@ import MyDebates from "./components/myDebates";
 import Account from "./components/account";
 import ProtectedRoute from "./components/common/protectedRoute";
 import DebateForm from './components/debateForm';
+import Messages from "./components/messages";
 
 class App extends Component {
     state={
@@ -55,6 +56,7 @@ class App extends Component {
                                 <ProtectedRoute path={'/debate/:id'} render={DebateForm} />
                                 <ProtectedRoute path={'/account'} render={Account} />
                                 <ProtectedRoute path={'/user/:id'} render={Account} />
+                                <ProtectedRoute path={'/message/:id'} render={Messages} />
                                 <Route exact path={'/logout'} render={()=><Logout />}/>
                                 <ProtectedRoute exact path={'/'} render={Home} />
                                 <Redirect to={'/404'} />

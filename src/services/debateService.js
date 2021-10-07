@@ -42,3 +42,7 @@ export async function getMyDebates(page, id){
 export async function searchDebate(search_query){
     return http.get(`${apiEndPoint}/search/${search_query}`);
 }
+
+export async function sendMessage(id, body){
+    return http.post(`${apiEndPoint}/message/${id}`, {message: body});
+}

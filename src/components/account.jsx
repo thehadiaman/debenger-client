@@ -14,10 +14,18 @@ class Account extends Component {
 
 
     async componentDidMount() {
-        const {location, match, history, user} = this.props;
+        const {location, match, history} = this.props;
         let account;
         if(location.pathname === '/account') account = await getAccountData();
-        else if(match.params.id) account = await getUserData(match.params.id)
+        else if(match.params.id){
+            try{
+                account = await getUserData(match.params.id)
+            }catch (ex) {
+                console.log(ex);
+                history.push('/404')
+                return;
+            }
+        }
 
         this.setState({account, following: account.following, debates: account.debates, liked: account.liked});
     }

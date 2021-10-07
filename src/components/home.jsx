@@ -1,7 +1,7 @@
 import React from "react";
 import {Grid} from "semantic-ui-react";
 import Debate from "./common/debate";
-import {getDebates, search, searchDebate} from "../services/debateService";
+import {getDebates, searchDebate} from "../services/debateService";
 import AskModal from "./common/askModal";
 import SearchBox from "./common/searchBox";
 import CommonHomePage from "./common/commonHomePage";
