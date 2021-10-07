@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {getAccountData} from "../services/userService";
+import {getAccountData, getUserData} from "../services/userService";
 import {Button, Card, Grid} from "semantic-ui-react";
 import ModalList from "./common/modalList";
 
@@ -14,18 +14,23 @@ class Account extends Component {
 
 
     async componentDidMount() {
-        const account = await getAccountData();
+        const {location, match, history, user} = this.props;
+        let account;
+        if(location.pathname === '/account') account = await getAccountData();
+        else if(match.params.id) account = await getUserData(match.params.id)
+
         this.setState({account, following: account.following, debates: account.debates, liked: account.liked});
     }
 
 
     render() {
+        console.log(this.props);
         const {name, email} = this.state.account;
         document.title = "Account";
         return (
             <Grid celled={'internally'} centered>
                 <Grid.Row>
-                    <Grid.Column width={10}>
+                    <Grid.Column  mobile={16} largeScreen={13} widescreen={13}>
                         <Card style={{width: "100%"}}>
                             <Card.Content>
                                 <Card.Header className={'center'}>{name}</Card.Header>
@@ -36,19 +41,19 @@ class Account extends Component {
                                         <Grid.Row columns={3}>
                                             <Grid.Column>
                                                 <ModalList
-                                                    trigger={<Button>Following Debates</Button>}
+                                                    trigger={<Button>Following</Button>}
                                                     title={'Following Debates'}
                                                     menuList={[...this.state.following]}/>
                                             </Grid.Column>
-                                            <Grid.Column>
+                                            <Grid.Column className={'center'}>
                                                 <ModalList
-                                                    trigger={<Button>Hosted Debates</Button>}
+                                                    trigger={<Button>Hosted</Button>}
                                                     title={'Hosted Debates'}
                                                     menuList={[...this.state.debates]}/>
                                             </Grid.Column>
                                             <Grid.Column>
                                                 <ModalList
-                                                    trigger={<Button>Liked Debates</Button>}
+                                                    trigger={<Button floated={'right'}>Liked</Button>}
                                                     title={'Liked Debates'}
                                                     menuList={[...this.state.liked]}/>
                                             </Grid.Column>

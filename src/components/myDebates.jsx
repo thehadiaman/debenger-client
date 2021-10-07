@@ -1,5 +1,5 @@
 import React from "react";
-import {getMyDebates} from "../services/debateService";
+import {getMyDebates, searchDebate} from "../services/debateService";
 import CommonHomePage from "./common/commonHomePage";
 import {Container, Grid} from "semantic-ui-react";
 import AskModal from "./common/askModal";
@@ -48,12 +48,18 @@ class MyDebates extends CommonHomePage {
     }
 
     handleSearch = async(input)=>{
+        let page;
+        try{
+            page = this.props.history.location.search.split('?')[1].split('=')[1]
+        }catch{
+            page = 1
+        }
         this.setState({searchString: input.target.value})
         let debates;
         if(input.target.value.trim()==='')
-            debates = (await getMyDebates(this.props.user._id)).data[0];
+            debates = (await getMyDebates(page, this.props.user._id)).data[0].filter(debate=>debate.title.toLowerCase().includes(input.target.value.toLowerCase()));
         else
-            debates = (await getMyDebates(this.props.user._id)).data[0].filter(debate=>debate.title.toLowerCase().includes(input.target.value.toLowerCase()));
+            debates = (await searchDebate(input.target.value)).data.filter(debate=>debate.host._id===this.props.user._id);
 
         this.setState({debates});
     }
@@ -63,18 +69,6 @@ class MyDebates extends CommonHomePage {
     render() {
         document.title = "My debates";
         const {user} = this.props;
-
-        if(this.state.debates.length<=0){
-            return (
-                <Grid >
-                    <Container>{this.addNewBtn()}</Container>
-                    <Grid.Row>
-                        <Grid.Column width={13}>
-                        </Grid.Column>
-                    </Grid.Row>
-                </Grid>
-            );
-        }
 
         return (
             <Grid centered>

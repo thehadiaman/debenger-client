@@ -54,6 +54,7 @@ class App extends Component {
                                 <ProtectedRoute path={'/mydebates'} render={MyDebates} />
                                 <ProtectedRoute path={'/debate/:id'} render={DebateForm} />
                                 <ProtectedRoute path={'/account'} render={Account} />
+                                <ProtectedRoute path={'/user/:id'} render={Account} />
                                 <Route exact path={'/logout'} render={()=><Logout />}/>
                                 <ProtectedRoute exact path={'/'} render={Home} />
                                 <Redirect to={'/404'} />

@@ -36,6 +36,9 @@ export function saveDebate(body){
 }
 
 export async function getMyDebates(page, id){
-    console.log(id);
     return (await http.get(`${apiEndPoint}/mydebates/?page=${page}&&id=${id}`));
+}
+
+export async function searchDebate(search_query){
+    return http.get(`${apiEndPoint}/search/${search_query}`);
 }

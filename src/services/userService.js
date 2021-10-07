@@ -14,3 +14,7 @@ export function verification(body){
 export async function getAccountData(){
     return (await http.get(`${apiEndPoint}/me`)).data;
 }
+
+export async function getUserData(id){
+    return (await http.get(`${apiEndPoint}/user/${id}`)).data;
+}

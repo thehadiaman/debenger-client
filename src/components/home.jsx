@@ -1,7 +1,7 @@
 import React from "react";
 import {Grid} from "semantic-ui-react";
 import Debate from "./common/debate";
-import {getDebates} from "../services/debateService";
+import {getDebates, search, searchDebate} from "../services/debateService";
 import AskModal from "./common/askModal";
 import SearchBox from "./common/searchBox";
 import CommonHomePage from "./common/commonHomePage";
@@ -10,7 +10,6 @@ class Home extends CommonHomePage {
 
     state={
         debates:[],
-        searchString: '',
         trigger: false,
         deleteId: '',
         totalPage: 1,
@@ -47,12 +46,12 @@ class Home extends CommonHomePage {
     }
 
     handleSearch = async(input)=>{
-        this.setState({searchString: input.target.value})
         let debates;
         if(input.target.value.trim()==='')
             debates = (await getDebates()).data[0];
-        else
-            debates = (await getDebates()).data[0].filter(debate=>debate.title.toLowerCase().includes(input.target.value.toLowerCase()));
+        else {
+            debates = (await searchDebate(input.target.value)).data;
+        }
 
         this.setState({debates});
     }
