@@ -48,6 +48,7 @@ class Messages extends CommonDebate {
                 state.likes = debate.like ? debate.like.likes: 0;
                 state.tags = debate.tags;
                 state.messages = debate.messages? debate.messages : [];
+                state.host = debate.host;
 
                 const following = debate.followers ? debate.followers.filter(d=>d._id === user._id): [];
                 if(following.length>0) {
@@ -59,7 +60,9 @@ class Messages extends CommonDebate {
                 if(like.length>0) state.like = true;
 
                 const host = debate.host? (debate.host._id === user._id) : false;
-                if(host) state.edit = true;
+                if(host) {
+                    state.edit = true;
+                }
 
                 this.setState(state);
             }
@@ -111,7 +114,7 @@ class Messages extends CommonDebate {
         const {likes, like, followingBtnText,  edit} = this.state;
         const {handleLike, handleFollow} = this;
         const {title, description, tags, _id, editMenu} = this.state;
-        const {name, _id : uid} = this.props.user;
+        const {name, _id : uid} = this.state.host;
 
         const header = <div>
             <Grid>

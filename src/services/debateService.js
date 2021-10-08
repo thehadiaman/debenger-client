@@ -1,7 +1,6 @@
 import http from "./httpService";
-import config from "./config.json";
 
-const apiEndPoint = `${config.apiUrl}/debate`;
+const apiEndPoint = '/debate';
 
 export async function getDebates(page=1){
     return await http.get(`${apiEndPoint}/?page=${page}`);

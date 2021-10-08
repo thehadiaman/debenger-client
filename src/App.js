@@ -3,7 +3,7 @@ import './App.css';
 import Navbar from "./components/navbar";
 import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
 import 'semantic-ui-css/semantic.min.css'
-import {Container, Grid, Sticky} from "semantic-ui-react";
+import {Container, Sticky} from "semantic-ui-react";
 import LoginForm from "./components/loginForm";
 import Verification from "./components/verification";
 import SignupForm from "./components/signupForm";
@@ -45,7 +45,7 @@ class App extends Component {
                 <BrowserRouter>
                     <Sticky context={this.contextRef} pushing={false} ><Navbar inverted={inverted} inverter={this.inverter} invIcon={invIcon} user={user}/></Sticky>
                     <Container>
-                        <Grid stackable columns={1}>
+                        <div>
                             <Switch>
                                 <Route exact path={'/signup'} render={(props)=><SignupForm {...props} user={user} inverted={inverted}/>} />
                                 <Route exact path={'/login'} render={(props)=><LoginForm {...props} user={user} inverted={inverted}/>} />
@@ -61,7 +61,7 @@ class App extends Component {
                                 <ProtectedRoute exact path={'/'} render={Home} />
                                 <Redirect to={'/404'} />
                             </Switch>
-                        </Grid>
+                        </div>
                     </Container>
                 </BrowserRouter>
             </div>
