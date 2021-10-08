@@ -2,14 +2,14 @@ import React from 'react'
 import {Button, Comment, Form, Header, TextArea} from "semantic-ui-react";
 import {Link} from "react-router-dom";
 
-const Message = ({messages, handleNewMessage, sendNewMessage}) => (
+const Message = ({messages, handleNewMessage, sendNewMessage, messageText}) => (
     <Comment.Group style={{width: '100%', textAlign: 'left', padding: '20px'}}>
         <Header as='h3' style={{marginTop: '15px', textAlign: 'center'}}>
             Messages
         </Header>
 
         <Form style={{textAlign: 'right'}}>
-            <TextArea rows={3} style={{resize: 'none'}} placeholder={"New Message"} onChange={handleNewMessage}/>
+            <TextArea rows={3} style={{resize: 'none'}} value={messageText} placeholder={"New Message"} onChange={handleNewMessage}/>
             <Button content='Send' labelPosition='left' onClick={sendNewMessage} icon='send' primary style={{marginBottom: '10px'}}/>
         </Form>
 
@@ -19,7 +19,7 @@ const Message = ({messages, handleNewMessage, sendNewMessage}) => (
                     <Comment.Content>
                         <Comment.Author as={Link} to={`/user/${message.messenger._id}`}>{message.messenger.name}</Comment.Author>
                         <Comment.Metadata>
-                            <div>{new Date(message.time).toUTCString()}</div>
+                            <div>{new Date(message.time).toLocaleString()}</div>
                         </Comment.Metadata>
                         <Comment.Text>{message.message}</Comment.Text>
                     </Comment.Content>

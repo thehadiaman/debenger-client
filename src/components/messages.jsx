@@ -33,32 +33,37 @@ class Messages extends CommonDebate {
     }
 
 
-    async componentDidMount() {
-        const {user} = this.props;
-        const state = {};
-        const debate = await getDebate(this.props.match.params.id);
+    componentDidMount() {
+        setInterval(async()=>{
+            const {user} = this.props;
+            const state = {};
+            const debate = await getDebate(this.props.match.params.id);
+            const condition = [(this.state.messages.length===0), (String(debate.messages? debate.messages.reverse(): [])),
+                (String(this.state.messages))
+            ]
+            if(condition[0] || (condition[1] !== condition[2])){
+                state.title = debate.title;
+                state._id = debate._id;
+                state.description = debate.description;
+                state.likes = debate.like ? debate.like.likes: 0;
+                state.tags = debate.tags;
+                state.messages = debate.messages? debate.messages : [];
 
+                const following = debate.followers ? debate.followers.filter(d=>d._id === user._id): [];
+                if(following.length>0) {
+                    state.following = true;
+                    state.followingBtnText = "Unfollow";
+                }
 
-        state.title = debate.title;
-        state._id = debate._id;
-        state.description = debate.description;
-        state.likes = debate.like ? debate.like.likes: 0;
-        state.tags = debate.tags;
-        state.messages = debate.messages;
+                const like = debate.like ? debate.like.lovers.filter(d=>d._id === user._id): false;
+                if(like.length>0) state.like = true;
 
-        const following = debate.followers.filter(d=>d._id === user._id);
-        if(following.length>0) {
-            state.following = true;
-            state.followingBtnText = "Unfollow";
-        }
+                const host = debate.host? (debate.host._id === user._id) : false;
+                if(host) state.edit = true;
 
-        const like = debate.like ? debate.like.lovers.filter(d=>d._id === user._id): false;
-        if(like.length>0) state.like = true;
-
-        const host = debate.host._id === user._id;
-        if(host) state.edit = true;
-
-        this.setState(state);
+                this.setState(state);
+            }
+        }, 1000)
 
     }
 
@@ -75,9 +80,29 @@ class Messages extends CommonDebate {
     sendNewMessage = async()=>{
         const {_id, messageText} = this.state;
         try {
+            const messages = [...this.state.messages];
+            const time = new Date();
+            const message = {
+                time: time,
+                message: this.state.messageText,
+                messenger: {
+                    _id: _id,
+                    name: this.props.user.name
+                },
+                _id: new Date()
+            };
+            messages.push(message);
+            const temp = messages[0];
+            messages[0] = messages[messages.length-1];
+            messages[messages.length-1] = temp;
+            console.log(messages);
+
+            this.setState({messages, messageText: ''});
             await sendMessage(_id, messageText);
+
+
         }catch (ex) {
-            console.log(ex.response.data || ex.message);
+            console.log(ex.message || ex.response.data)
         }
     }
 
@@ -130,7 +155,7 @@ class Messages extends CommonDebate {
                             </Card.Content>}
                             <Card.Description>
                                 <Grid centered>
-                                    <Message sendNewMessage={this.sendNewMessage} handleNewMessage={this.handleNewMessage} messages={this.state.messages}/>
+                                    <Message messageText={this.state.messageText} sendNewMessage={this.sendNewMessage} handleNewMessage={this.handleNewMessage} messages={this.state.messages}/>
                                 </Grid>
                             </Card.Description>
                         </Card>
